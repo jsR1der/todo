@@ -1,6 +1,5 @@
-import { Component } from '@angular/core';
-import {Params, Router, RouterLink} from "@angular/router";
-import {routes} from "../../../app.routes";
+import {Component} from '@angular/core';
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -12,8 +11,4 @@ import {routes} from "../../../app.routes";
   styleUrl: './login.component.scss'
 })
 export class LoginComponent {
-  constructor(public router: Router) {
-  }
-  public params: Params = {}
-
 }
