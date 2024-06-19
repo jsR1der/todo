@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 
 @Component({
-  selector: 'app-list-item',
+  selector: 'app-selection-list-item',
   standalone: true,
   imports: [],
   templateUrl: './list-item.component.html',

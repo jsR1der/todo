@@ -2,13 +2,13 @@ import {Component} from '@angular/core';
 import {RouterLink} from "@angular/router";
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-auth',
   standalone: true,
   imports: [
     RouterLink
   ],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.scss'
+  templateUrl: './auth.component.html',
+  styleUrl: './auth.component.scss'
 })
-export class LoginComponent {
+export class AuthComponent {
 }

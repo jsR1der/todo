@@ -1,0 +1,17 @@
+<mat-drawer-container class="h-full" autosize>
+  <mat-drawer #drawer
+              class="p-4"
+              mode="side"
+              opened="true">
+    <app-user-info></app-user-info>
+    <app-groups></app-groups>
+    <app-header></app-header>
+    <app-selection-list></app-selection-list>
+  </mat-drawer>
+  <main class="p-4">
+    <app-toolbar></app-toolbar>
+    <app-header></app-header>
+    <app-detailed-list></app-detailed-list>
+  </main>
+
+</mat-drawer-container>

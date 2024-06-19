@@ -1,16 +1,16 @@
 import {Routes} from '@angular/router';
-import {LoginComponent} from "./shared/components/login/login.component";
-import {MainComponent} from "./shared/components/main/main.component";
-import {authGuard} from "./shared/auth.guard";
+import {AuthComponent} from "./pages/auth/auth.component";
+import {MainComponent} from "./pages/main/main.component";
+import {authGuard} from "./guards/auth.guard";
 
 export const routes: Routes = [
   {
-    path: 'login', component: LoginComponent
+    path: 'auth', component: AuthComponent
   },
   {
     path: '', canActivate: [authGuard], component: MainComponent
   },
   {
-    path: '**', redirectTo: 'login', pathMatch: 'full'
+    path: '**', redirectTo: 'auth', pathMatch: 'full'
   }
 ]
