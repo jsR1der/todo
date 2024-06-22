@@ -2,6 +2,48 @@
     "pipes": [],
     "interfaces": [
         {
+            "name": "IGroupItem",
+            "id": "interface-IGroupItem-48b4dd29d7b752fb73f540dbc29d93430b5f3174a5f1d20e5f5be7cacab47e694a18c6d1e3129199a59d9e1ac8d120a6497108cfcf55e8a92adee0aca0c39697",
+            "file": "src/app/components/groups/group-item/group-item.model.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "interface",
+            "sourceCode": "export interface IGroupItem {\n  icon: string;\n  name: string;\n  containItems: number;\n}\n",
+            "properties": [
+                {
+                    "name": "containItems",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "number",
+                    "optional": false,
+                    "description": "",
+                    "line": 4
+                },
+                {
+                    "name": "icon",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 2
+                },
+                {
+                    "name": "name",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 3
+                }
+            ],
+            "indexSignatures": [],
+            "kind": 171,
+            "methods": [],
+            "extends": []
+        },
+        {
             "name": "User",
             "id": "interface-User-d4821beac0e4a852e513391b7470981c4353fdd95a18628bb68136c8695b489ee15b926e2e5031bc26cf30e1508e0a362c3ee13a06734702b4d15af140e485d5",
             "file": "src/stories/user.ts",
@@ -29,12 +71,59 @@
     "injectables": [],
     "guards": [],
     "interceptors": [],
-    "classes": [],
+    "classes": [
+        {
+            "name": "ButtonConfig",
+            "id": "class-ButtonConfig-a43c53df18d02808811298f9dea0e4e90c787e9527e1348042ee096d89a395eaf224257df513cb79b61fadb26ef1095ad998f85e5b7ba9cc802558412cff8400",
+            "file": "src/app/components/button/button.model.ts",
+            "deprecated": false,
+            "deprecationMessage": "",
+            "type": "class",
+            "sourceCode": "export class ButtonConfig<P> {\n  iconName: string;\n  color: string;\n  action: (params?: P) => void = () => {\n    console.log('Button clicked');\n  }\n}\n",
+            "inputsClass": [],
+            "outputsClass": [],
+            "properties": [
+                {
+                    "name": "action",
+                    "defaultValue": "() => {...}",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "function",
+                    "optional": false,
+                    "description": "",
+                    "line": 4
+                },
+                {
+                    "name": "color",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 3
+                },
+                {
+                    "name": "iconName",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "string",
+                    "optional": false,
+                    "description": "",
+                    "line": 2
+                }
+            ],
+            "methods": [],
+            "indexSignatures": [],
+            "extends": [],
+            "hostBindings": [],
+            "hostListeners": []
+        }
+    ],
     "directives": [],
     "components": [
         {
             "name": "AppComponent",
-            "id": "component-AppComponent-580518bcfc68f1d3b19f6fbfe93c5faa019772cd1970c9d3e6f30dd85de79ce279c83848347de9269232b3fd5cabcd4a75025ef681f06397b78ca5f8f36a6e69",
+            "id": "component-AppComponent-c03b52e12e7317e287873beb547ea6de3d4895fb6b9fe2ccc1f7c07b8ee975ce4170825390a988e8b2a73fc062947b46431ac8de7294a3cc2f210c572e220bc1",
             "file": "src/app/app.component.ts",
             "encapsulation": [],
             "entryComponents": [],
@@ -52,7 +141,21 @@
             "inputsClass": [],
             "outputsClass": [],
             "propertiesClass": [],
-            "methodsClass": [],
+            "methodsClass": [
+                {
+                    "name": "action",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 13,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ]
+                }
+            ],
             "deprecated": false,
             "deprecationMessage": "",
             "hostBindings": [],
@@ -61,18 +164,64 @@
             "imports": [
                 {
                     "name": "RouterOutlet"
+                },
+                {
+                    "name": "ButtonComponent",
+                    "type": "component"
                 }
             ],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\nimport { RouterOutlet } from '@angular/router';\n\n@Component({\n  selector: 'app-root',\n  standalone: true,\n  imports: [RouterOutlet],\n  templateUrl: './app.component.html',\n  styleUrl: './app.component.scss'\n})\nexport class AppComponent {\n}\n",
+            "sourceCode": "import {Component} from '@angular/core';\nimport {RouterOutlet} from '@angular/router';\nimport {ButtonComponent} from \"./components/button/button.component\";\n\n@Component({\n  selector: 'app-root',\n  standalone: true,\n  imports: [RouterOutlet, ButtonComponent],\n  templateUrl: './app.component.html',\n  styleUrl: './app.component.scss'\n})\nexport class AppComponent {\n  public action() {\n    console.log(`test`)\n  }\n}\n",
             "styleUrl": "./app.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
             "extends": [],
-            "templateData": "<router-outlet></router-outlet>\n"
+            "templateData": "<router-outlet></router-outlet>\n<app-button [config]=\"{iconName: 'menu', color: 'primary',action: action.bind(this)}\"></app-button>\n"
+        },
+        {
+            "name": "AuthComponent",
+            "id": "component-AuthComponent-e5be1267cb11d13ee6a09f6bb249e4fa3206f0bf67cdaea275ce5df9a1f415e3e68fc4182c494756e83e4cdebf6c02013461299e2476c30bb6480428819de973",
+            "file": "src/app/pages/auth/auth.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-auth",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./auth.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "RouterLink"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import {Component} from '@angular/core';\nimport {RouterLink} from \"@angular/router\";\n\n@Component({\n  selector: 'app-auth',\n  standalone: true,\n  imports: [\n    RouterLink\n  ],\n  templateUrl: './auth.component.html',\n  styleUrl: './auth.component.scss'\n})\nexport class AuthComponent {\n}\n",
+            "styleUrl": "./auth.component.scss",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": [],
+            "templateData": "<p>login works!</p>\n<a routerLink=\"\" [queryParams]=\"{'authenticated':'true'}\">To the app</a>\n"
         },
         {
             "name": "ButtonComponent",
@@ -209,8 +358,8 @@
         },
         {
             "name": "ButtonComponent",
-            "id": "component-ButtonComponent-e815ae7ac8c13cb56c9d6f75bfac47575df8d20e793fc630b8ac6cc1465808394d1eec4d741c09948741dc87b8cedb0690eb1a7c81939e0950ce97afed60fe47-1",
-            "file": "src/app/shared/components/button/button.component.ts",
+            "id": "component-ButtonComponent-a03ff12f96650cef8b6173e6536814cf4dadb16e3c3b8cf7684f001afb4315dcd4b84d53da82eb3504213ba6c6fcc4b45739fb6d8436da9c0946276e857d49c2-1",
+            "file": "src/app/components/button/button.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -224,20 +373,52 @@
             ],
             "viewProviders": [],
             "hostDirectives": [],
-            "inputsClass": [],
+            "inputsClass": [
+                {
+                    "required": true,
+                    "name": "config",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "optional": false,
+                    "line": 17,
+                    "type": "ButtonConfig<P>",
+                    "decorators": []
+                }
+            ],
             "outputsClass": [],
             "propertiesClass": [],
-            "methodsClass": [],
+            "methodsClass": [
+                {
+                    "name": "defaultAction",
+                    "args": [],
+                    "optional": false,
+                    "returnType": "void",
+                    "typeParameters": [],
+                    "line": 18,
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "modifierKind": [
+                        125
+                    ]
+                }
+            ],
             "deprecated": false,
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
             "standalone": true,
-            "imports": [],
+            "imports": [
+                {
+                    "name": "MatIconButton"
+                },
+                {
+                    "name": "MatIcon"
+                }
+            ],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-button',\n  standalone: true,\n  imports: [],\n  templateUrl: './button.component.html',\n  styleUrl: './button.component.scss'\n})\nexport class ButtonComponent {\n\n}\n",
+            "sourceCode": "import {Component, Input} from '@angular/core';\nimport {MatIconButton} from \"@angular/material/button\";\nimport {MatIcon} from \"@angular/material/icon\";\nimport {ButtonConfig} from \"./button.model\";\n\n@Component({\n  selector: 'app-button',\n  standalone: true,\n  imports: [\n    MatIconButton,\n    MatIcon\n  ],\n  templateUrl: './button.component.html',\n  styleUrl: './button.component.scss'\n})\nexport class ButtonComponent<P = any> {\n  @Input({required: true}) config: ButtonConfig<P>;\n  public defaultAction() {\n    console.log(`action clicked`)\n  }\n}\n",
             "styleUrl": "./button.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
@@ -246,22 +427,22 @@
             "isDuplicate": true,
             "duplicateId": 1,
             "duplicateName": "ButtonComponent-1",
-            "templateData": "<p>button works!</p>\n"
+            "templateData": "<button mat-icon-button [color]=\"config.color\" (click)=\"config.action()\">\n  <mat-icon [fontIcon]=\"config.iconName\"></mat-icon>\n</button>\n"
         },
         {
-            "name": "GroupComponent",
-            "id": "component-GroupComponent-8e6406d700244acec838e686e10effcc674f85f6ba9c5160dd21ff2017fab5c4c2bc8d54cb628c62a56036552b24bcece88bd5f390250910e54343ff25dd30f5",
-            "file": "src/app/shared/components/groups/group/group.component.ts",
+            "name": "DetailedListComponent",
+            "id": "component-DetailedListComponent-f4f968f3430859066f6b7133dbf0c58c051cd5fe7c25722bf4de02f673819470dd57459697269a40627de18eba70387a7bc1d11ba25462b49fe99dcef204eae6",
+            "file": "src/app/components/detailed-list/detailed-list.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "app-group",
+            "selector": "app-detailed-list",
             "styleUrls": [],
             "styles": [],
             "templateUrl": [
-                "./group.component.html"
+                "./detailed-list.component.html"
             ],
             "viewProviders": [],
             "hostDirectives": [],
@@ -278,18 +459,86 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-group',\n  standalone: true,\n  imports: [],\n  templateUrl: './group.component.html',\n  styleUrl: './group.component.scss'\n})\nexport class GroupComponent {\n\n}\n",
-            "styleUrl": "./group.component.scss",
+            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-detailed-list',\n  standalone: true,\n  imports: [],\n  templateUrl: './detailed-list.component.html',\n  styleUrl: './detailed-list.component.scss'\n})\nexport class DetailedListComponent {\n\n}\n",
+            "styleUrl": "./detailed-list.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
             "extends": [],
-            "templateData": "<p>group works!</p>\n"
+            "templateData": "<p>detailed-list works!</p>\n"
+        },
+        {
+            "name": "GroupItemComponent",
+            "id": "component-GroupItemComponent-adbf6203e5eea9d7994faf8c2dd5b8533474719a87eb6c1603c0ef20ee1aea1e364c451c5efe88bc47ad8ae6c6d79c5df59a36296ce7ca460a73bc47a111da6c",
+            "file": "src/app/components/groups/group-item/group-item.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-group-item",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./group-item.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [
+                {
+                    "required": true,
+                    "name": "group",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "optional": false,
+                    "line": 21,
+                    "type": "IGroupItem",
+                    "decorators": []
+                }
+            ],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [
+                {
+                    "name": "MatCard"
+                },
+                {
+                    "name": "MatCardHeader"
+                },
+                {
+                    "name": "MatCardTitle"
+                },
+                {
+                    "name": "MatCardSubtitle"
+                },
+                {
+                    "name": "MatCardContent"
+                },
+                {
+                    "name": "MatIcon"
+                }
+            ],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import {Component, Input} from '@angular/core';\nimport {IGroupItem} from \"./group-item.model\";\nimport {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from \"@angular/material/card\";\nimport {MatIcon} from \"@angular/material/icon\";\n\n@Component({\n  selector: 'app-group-item',\n  standalone: true,\n  imports: [\n    MatCard,\n    MatCardHeader,\n    MatCardTitle,\n    MatCardSubtitle,\n    MatCardContent,\n    MatIcon\n  ],\n  templateUrl: './group-item.component.html',\n  styleUrl: './group-item.component.scss'\n})\nexport class GroupItemComponent {\n @Input({required: true}) group: IGroupItem;\n}\n",
+            "styleUrl": "./group-item.component.scss",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": [],
+            "templateData": "<section class=\"todo-group flex justify-between items-start\">\n  <div>\n    <mat-icon fontIcon=\"home\"></mat-icon>\n    <p>{{group.name}}</p>\n  </div>\n  <div>{{group.containItems}}</div>\n</section>\n"
         },
         {
             "name": "GroupsComponent",
-            "id": "component-GroupsComponent-97ce356e2ecaecfb4e192de2dd73a1540011a95cc8750adecbe8eda61cd347979dadf81e65d56d864510c70d33fd5cefa55b68f9dd468792d2bbff7452fbce73",
-            "file": "src/app/shared/components/groups/groups.component.ts",
+            "id": "component-GroupsComponent-3043b3f803d3c9c009e80e99aad6f28e494700541ec66d696a531d77f6592e609d21571121a4318b28a1200270f22561b962f212eba24bbf99e3bd6a7d7512cb",
+            "file": "src/app/components/groups/groups.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -305,24 +554,43 @@
             "hostDirectives": [],
             "inputsClass": [],
             "outputsClass": [],
-            "propertiesClass": [],
+            "propertiesClass": [
+                {
+                    "name": "groups",
+                    "defaultValue": "[\n   {icon: '',\n   name: 'Test',\n   containItems: 10}\n ]",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "type": "IGroupItem[]",
+                    "optional": false,
+                    "description": "",
+                    "line": 15,
+                    "modifierKind": [
+                        125
+                    ]
+                }
+            ],
             "methodsClass": [],
             "deprecated": false,
             "deprecationMessage": "",
             "hostBindings": [],
             "hostListeners": [],
             "standalone": true,
-            "imports": [],
+            "imports": [
+                {
+                    "name": "GroupItemComponent",
+                    "type": "component"
+                }
+            ],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-groups',\n  standalone: true,\n  imports: [],\n  templateUrl: './groups.component.html',\n  styleUrl: './groups.component.scss'\n})\nexport class GroupsComponent {\n\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\nimport {IGroupItem} from \"./group-item/group-item.model\";\nimport {GroupItemComponent} from \"./group-item/group-item.component\";\n\n@Component({\n  selector: 'app-groups',\n  standalone: true,\n  imports: [\n    GroupItemComponent\n  ],\n  templateUrl: './groups.component.html',\n  styleUrl: './groups.component.scss'\n})\nexport class GroupsComponent {\n public groups: IGroupItem[] = [\n   {icon: '',\n   name: 'Test',\n   containItems: 10}\n ]\n}\n",
             "styleUrl": "./groups.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
             "extends": [],
-            "templateData": "<p>groups works!</p>\n"
+            "templateData": "@for (group of groups; track group.name) {\n  <app-group-item [group]=\"group\"></app-group-item>\n}\n"
         },
         {
             "name": "HeaderComponent",
@@ -413,7 +681,7 @@
         {
             "name": "HeaderComponent",
             "id": "component-HeaderComponent-55b2f76ba88d172484079d2eabd13435adc1a2e52295c3f7c2cb1976865b110222f4e1f98694bd129006acd87d512d3552ead98bf05dd1e25e70d24db8b576a5-1",
-            "file": "src/app/shared/components/header/header.component.ts",
+            "file": "src/app/components/header/header.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -453,14 +721,14 @@
         },
         {
             "name": "ListComponent",
-            "id": "component-ListComponent-e58498de688a9538d53e1799c2eccbff987f35697a80314e100e875c7f83583100b92d9dc6de43817660fac893a82ad587513b27ffd6b91e5ea26ba67e772dba",
-            "file": "src/app/shared/components/list/list.component.ts",
+            "id": "component-ListComponent-4beee56f8dba020878590659690d9ff62ab966a0441f8d708534b2cf3275b7a25224cdaf84cfdc3f5807103d4debc17b927c3bae4911e500aadd7442ed36a359",
+            "file": "src/app/components/selection-list/list.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "app-list",
+            "selector": "app-selection-list",
             "styleUrls": [],
             "styles": [],
             "templateUrl": [
@@ -481,7 +749,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-list',\n  standalone: true,\n  imports: [],\n  templateUrl: './list.component.html',\n  styleUrl: './list.component.scss'\n})\nexport class ListComponent {\n\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-selection-list',\n  standalone: true,\n  imports: [],\n  templateUrl: './list.component.html',\n  styleUrl: './list.component.scss'\n})\nexport class ListComponent {\n\n}\n",
             "styleUrl": "./list.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
@@ -491,14 +759,14 @@
         },
         {
             "name": "ListItemComponent",
-            "id": "component-ListItemComponent-409c43defdaa103af2133fda8fe394600054b2f9b950c6c3d0371c24e95033f4eca2bacb49129e47dce6ac4555431b7188e682eed3efcc2407429d8b06c23b43",
-            "file": "src/app/shared/components/list/list-item/list-item.component.ts",
+            "id": "component-ListItemComponent-194000a7009fbb1ac6cc4309b38c039b120e6cca9211e0d0cc140cd9303e8e29f97db3c3ac6ae1b6c14b151a532cf5b6dbcc2961cd19177a28579414e92add5b",
+            "file": "src/app/components/selection-list/list-item/list-item.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "app-list-item",
+            "selector": "app-selection-list-item",
             "styleUrls": [],
             "styles": [],
             "templateUrl": [
@@ -519,7 +787,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-list-item',\n  standalone: true,\n  imports: [],\n  templateUrl: './list-item.component.html',\n  styleUrl: './list-item.component.scss'\n})\nexport class ListItemComponent {\n\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-selection-list-item',\n  standalone: true,\n  imports: [],\n  templateUrl: './list-item.component.html',\n  styleUrl: './list-item.component.scss'\n})\nexport class ListItemComponent {\n\n}\n",
             "styleUrl": "./list-item.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
@@ -528,51 +796,9 @@
             "templateData": "<p>list-item works!</p>\n"
         },
         {
-            "name": "LoginComponent",
-            "id": "component-LoginComponent-8f972f7bf754b5aa3457b28b8bf1df2f93f1fdfa223e1e91792b4feb86cc1a482121d6f19c6734f6a1f87fc8287c91bab183a46bd6d72218486dedaab8eae0db",
-            "file": "src/app/shared/components/login/login.component.ts",
-            "encapsulation": [],
-            "entryComponents": [],
-            "inputs": [],
-            "outputs": [],
-            "providers": [],
-            "selector": "app-login",
-            "styleUrls": [],
-            "styles": [],
-            "templateUrl": [
-                "./login.component.html"
-            ],
-            "viewProviders": [],
-            "hostDirectives": [],
-            "inputsClass": [],
-            "outputsClass": [],
-            "propertiesClass": [],
-            "methodsClass": [],
-            "deprecated": false,
-            "deprecationMessage": "",
-            "hostBindings": [],
-            "hostListeners": [],
-            "standalone": true,
-            "imports": [
-                {
-                    "name": "RouterLink"
-                }
-            ],
-            "description": "",
-            "rawdescription": "\n",
-            "type": "component",
-            "sourceCode": "import {Component} from '@angular/core';\nimport {RouterLink} from \"@angular/router\";\n\n@Component({\n  selector: 'app-login',\n  standalone: true,\n  imports: [\n    RouterLink\n  ],\n  templateUrl: './login.component.html',\n  styleUrl: './login.component.scss'\n})\nexport class LoginComponent {\n}\n",
-            "styleUrl": "./login.component.scss",
-            "assetsDirs": [],
-            "styleUrlsData": "",
-            "stylesData": "",
-            "extends": [],
-            "templateData": "<p>login works!</p>\n<a routerLink=\"\" [queryParams]=\"{'authenticated':'true'}\">To the app</a>\n"
-        },
-        {
             "name": "MainComponent",
-            "id": "component-MainComponent-c513cffaca0f9d3d68616d68d28a332252a00379d338e5755c1b0289f43039c94b9c48927d7fe8539d95820a74ae4275f481a3fa7951cf32f5399c52fe7a6197",
-            "file": "src/app/shared/components/main/main.component.ts",
+            "id": "component-MainComponent-f316b8202fa51015310e88596ea926f90fdb7f2f021ee58af94f52265f7ac24685be8895ce72b3e0ecc104ed55bf78e8e64d0b17bf351f6d63263f87411f8662",
+            "file": "src/app/pages/main/main.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -588,21 +814,7 @@
             "hostDirectives": [],
             "inputsClass": [],
             "outputsClass": [],
-            "propertiesClass": [
-                {
-                    "name": "showFiller",
-                    "defaultValue": "true",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "type": "",
-                    "optional": false,
-                    "description": "",
-                    "line": 27,
-                    "modifierKind": [
-                        125
-                    ]
-                }
-            ],
+            "propertiesClass": [],
             "methodsClass": [],
             "deprecated": false,
             "deprecationMessage": "",
@@ -638,18 +850,26 @@
                 {
                     "name": "HeaderComponent",
                     "type": "component"
+                },
+                {
+                    "name": "DetailedListComponent",
+                    "type": "component"
+                },
+                {
+                    "name": "ToolbarComponent",
+                    "type": "component"
                 }
             ],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\nimport {MatDrawer, MatDrawerContainer} from \"@angular/material/sidenav\";\nimport {MatButton} from \"@angular/material/button\";\nimport {UserInfoComponent} from \"../user-info/user-info.component\";\nimport {GroupsComponent} from \"../groups/groups.component\";\nimport {ListComponent} from \"../list/list.component\";\nimport {ButtonComponent} from \"../button/button.component\";\nimport {HeaderComponent} from \"../header/header.component\";\n\n@Component({\n  selector: 'app-main',\n  standalone: true,\n  imports: [\n    MatDrawerContainer,\n    MatButton,\n    MatDrawer,\n    UserInfoComponent,\n    GroupsComponent,\n    ListComponent,\n    ButtonComponent,\n    HeaderComponent\n  ],\n  templateUrl: './main.component.html',\n  styleUrl: './main.component.scss'\n})\nexport class MainComponent {\n  public showFiller = true;\n}\n",
+            "sourceCode": "import {Component} from '@angular/core';\nimport {MatDrawer, MatDrawerContainer} from \"@angular/material/sidenav\";\nimport {MatButton} from \"@angular/material/button\";\nimport {UserInfoComponent} from \"../../components/user-info/user-info.component\";\nimport {GroupsComponent} from \"../../components/groups/groups.component\";\nimport {ListComponent} from \"../../components/selection-list/list.component\";\nimport {ButtonComponent} from \"../../components/button/button.component\";\nimport {HeaderComponent} from \"../../components/header/header.component\";\nimport {DetailedListComponent} from \"../../components/detailed-list/detailed-list.component\";\nimport {ToolbarComponent} from \"../../components/toolbar/toolbar.component\";\n\n@Component({\n  selector: 'app-main',\n  standalone: true,\n  imports: [\n    MatDrawerContainer,\n    MatButton,\n    MatDrawer,\n    UserInfoComponent,\n    GroupsComponent,\n    ListComponent,\n    ButtonComponent,\n    HeaderComponent,\n    DetailedListComponent,\n    ToolbarComponent\n  ],\n  templateUrl: './main.component.html',\n  styleUrl: './main.component.scss'\n})\nexport class MainComponent {\n}\n",
             "styleUrl": "./main.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
             "extends": [],
-            "templateData": "<mat-drawer-container class=\"example-container\" autosize>\n  <mat-drawer #drawer\n              class=\"example-sidenav\"\n              mode=\"side\"\n              opened=\"true\">\n    <app-user-info></app-user-info>\n    <app-groups></app-groups>\n    <app-list></app-list>\n    <app-button></app-button>\n  </mat-drawer>\n    <main>\n      <app-header></app-header>\n      <app-list></app-list>\n    </main>\n\n</mat-drawer-container>\n"
+            "templateData": "<mat-drawer-container class=\"h-full\" autosize>\n  <mat-drawer #drawer\n              class=\"p-4\"\n              mode=\"side\"\n              opened=\"true\">\n    <app-user-info></app-user-info>\n    <app-groups></app-groups>\n    <app-header></app-header>\n    <app-selection-list></app-selection-list>\n  </mat-drawer>\n  <main class=\"p-4\">\n    <app-toolbar></app-toolbar>\n    <app-header></app-header>\n    <app-detailed-list></app-detailed-list>\n  </main>\n\n</mat-drawer-container>\n"
         },
         {
             "name": "PageComponent",
@@ -746,14 +966,14 @@
         },
         {
             "name": "SearchComponent",
-            "id": "component-SearchComponent-eb5311d4906da6243b21880bea3680e34c58b4e90061d550cdacb4fd8b59eb5594639cd010c4bb52104efce860942429e6757fe1193ba1baf99c9be36fe928aa",
-            "file": "src/app/shared/components/search/search.component.ts",
+            "id": "component-SearchComponent-46a24e91ba795c83377cee684e8fde28700bfafa05e87fde7031b19161674eec3e41819eef45efc9fbb24ae3c46971637ae2be7d96377c5ff62f8f93d7cb54f0",
+            "file": "src/app/components/search-input/search.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
             "outputs": [],
             "providers": [],
-            "selector": "app-search",
+            "selector": "app-search-input",
             "styleUrls": [],
             "styles": [],
             "templateUrl": [
@@ -774,7 +994,7 @@
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-search',\n  standalone: true,\n  imports: [],\n  templateUrl: './search.component.html',\n  styleUrl: './search.component.scss'\n})\nexport class SearchComponent {\n\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-search-input',\n  standalone: true,\n  imports: [],\n  templateUrl: './search.component.html',\n  styleUrl: './search.component.scss'\n})\nexport class SearchComponent {\n\n}\n",
             "styleUrl": "./search.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
@@ -785,7 +1005,7 @@
         {
             "name": "TitleComponent",
             "id": "component-TitleComponent-5bf75e37c3ae2b0b2287e5fff7f102e650048ec3f8c1757a32b244751830305c101b16cabf32bf3ff6ae478dedb5f31149a46e6d79b9ab300ffe357c5b44bc0f",
-            "file": "src/app/shared/components/title/title.component.ts",
+            "file": "src/app/components/title/title.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -821,9 +1041,47 @@
             "templateData": "<p>title works!</p>\n"
         },
         {
+            "name": "ToolbarComponent",
+            "id": "component-ToolbarComponent-cf12af26108668c3ca4e1f4abde592118bce937b5db841ca81e2d77d016687b69b0f4443f0b7e52e60ad9e83203450762d6c858dcb6a98aa823e384b4dd294d8",
+            "file": "src/app/components/toolbar/toolbar.component.ts",
+            "encapsulation": [],
+            "entryComponents": [],
+            "inputs": [],
+            "outputs": [],
+            "providers": [],
+            "selector": "app-toolbar",
+            "styleUrls": [],
+            "styles": [],
+            "templateUrl": [
+                "./toolbar.component.html"
+            ],
+            "viewProviders": [],
+            "hostDirectives": [],
+            "inputsClass": [],
+            "outputsClass": [],
+            "propertiesClass": [],
+            "methodsClass": [],
+            "deprecated": false,
+            "deprecationMessage": "",
+            "hostBindings": [],
+            "hostListeners": [],
+            "standalone": true,
+            "imports": [],
+            "description": "",
+            "rawdescription": "\n",
+            "type": "component",
+            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-toolbar',\n  standalone: true,\n  imports: [],\n  templateUrl: './toolbar.component.html',\n  styleUrl: './toolbar.component.scss'\n})\nexport class ToolbarComponent {\n\n}\n",
+            "styleUrl": "./toolbar.component.scss",
+            "assetsDirs": [],
+            "styleUrlsData": "",
+            "stylesData": "",
+            "extends": [],
+            "templateData": "<p>toolbar works!</p>\n"
+        },
+        {
             "name": "UserImageComponent",
             "id": "component-UserImageComponent-60ecc4e21f6b31057d1ea60a1cec0dfc34a9b9ff9eeb4fc538e568a343294ca50e1229c2846bf1919ed435062b2ddbb177c62429989dd0fd38f22ce34159ee6f",
-            "file": "src/app/shared/components/user-info/user-image/user-image.component.ts",
+            "file": "src/app/components/user-info/user-image/user-image.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -860,8 +1118,8 @@
         },
         {
             "name": "UserInfoComponent",
-            "id": "component-UserInfoComponent-84ba3f14fca4c7fba7b8fa29db01e496571df7fa742877c4135a9a747c9dbf76203374ec72eb24e303526eaa750145be10b54c50f537e3cc6cbe79bc87ba8a52",
-            "file": "src/app/shared/components/user-info/user-info.component.ts",
+            "id": "component-UserInfoComponent-24e50fcc1b994927fd6c3606adb732f9b7bdd212b0f0b1924de95db88b425d0d54625969e52f8afc672492208505f555149ab91c8bcbf17f6fdda05992d661bf",
+            "file": "src/app/components/user-info/user-info.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -884,22 +1142,31 @@
             "hostBindings": [],
             "hostListeners": [],
             "standalone": true,
-            "imports": [],
+            "imports": [
+                {
+                    "name": "UserImageComponent",
+                    "type": "component"
+                },
+                {
+                    "name": "UserNameComponent",
+                    "type": "component"
+                }
+            ],
             "description": "",
             "rawdescription": "\n",
             "type": "component",
-            "sourceCode": "import { Component } from '@angular/core';\n\n@Component({\n  selector: 'app-user-info',\n  standalone: true,\n  imports: [],\n  templateUrl: './user-info.component.html',\n  styleUrl: './user-info.component.scss'\n})\nexport class UserInfoComponent {\n\n}\n",
+            "sourceCode": "import { Component } from '@angular/core';\nimport {UserImageComponent} from \"./user-image/user-image.component\";\nimport {UserNameComponent} from \"./user-name/user-name.component\";\n\n@Component({\n  selector: 'app-user-info',\n  standalone: true,\n  imports: [\n    UserImageComponent,\n    UserNameComponent\n  ],\n  templateUrl: './user-info.component.html',\n  styleUrl: './user-info.component.scss'\n})\nexport class UserInfoComponent {\n\n}\n",
             "styleUrl": "./user-info.component.scss",
             "assetsDirs": [],
             "styleUrlsData": "",
             "stylesData": "",
             "extends": [],
-            "templateData": "<p>user-info works!</p>\n"
+            "templateData": "<section class=\"flex justify-between items-center\">\n  <app-user-image></app-user-image>\n  <app-user-name></app-user-name>\n</section>\n"
         },
         {
             "name": "UserNameComponent",
             "id": "component-UserNameComponent-7094dd6e00b2c1d5867677d584f21f650eedf09328c0485b5339fe989dc5d188acdd0b57297f76796f0bec34236ce37ea9061819437f127b6f9b024f3c97c3a6",
-            "file": "src/app/shared/components/user-info/user-name/user-name.component.ts",
+            "file": "src/app/components/user-info/user-name/user-name.component.ts",
             "encapsulation": [],
             "entryComponents": [],
             "inputs": [],
@@ -946,17 +1213,17 @@
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "ApplicationConfig",
-                "defaultValue": "{\n  providers: [provideRouter(routes), provideAnimationsAsync()]\n}"
+                "defaultValue": "{\n  providers: [provideRouter(routes), provideAnimationsAsync(), provideStore()]\n}"
             },
             {
                 "name": "authGuard",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app/shared/auth.guard.ts",
+                "file": "src/app/guards/auth.guard.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "CanActivateFn",
-                "defaultValue": "(route) => {\n  const router = inject(Router);\n  if (route.queryParams['authenticated'] === 'true') {\n    return true;\n  }\n  return router.createUrlTree(['login']);\n}"
+                "defaultValue": "(route) => {\n  const router = inject(Router);\n  if (route.queryParams['authenticated'] === 'true') {\n    return true;\n  }\n  return router.createUrlTree(['auth']);\n}"
             }
         ],
         "functions": [],
@@ -972,19 +1239,19 @@
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "ApplicationConfig",
-                    "defaultValue": "{\n  providers: [provideRouter(routes), provideAnimationsAsync()]\n}"
+                    "defaultValue": "{\n  providers: [provideRouter(routes), provideAnimationsAsync(), provideStore()]\n}"
                 }
             ],
-            "src/app/shared/auth.guard.ts": [
+            "src/app/guards/auth.guard.ts": [
                 {
                     "name": "authGuard",
                     "ctype": "miscellaneous",
                     "subtype": "variable",
-                    "file": "src/app/shared/auth.guard.ts",
+                    "file": "src/app/guards/auth.guard.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "type": "CanActivateFn",
-                    "defaultValue": "(route) => {\n  const router = inject(Router);\n  if (route.queryParams['authenticated'] === 'true') {\n    return true;\n  }\n  return router.createUrlTree(['login']);\n}"
+                    "defaultValue": "(route) => {\n  const router = inject(Router);\n  if (route.queryParams['authenticated'] === 'true') {\n    return true;\n  }\n  return router.createUrlTree(['auth']);\n}"
                 }
             ]
         },
@@ -994,7 +1261,7 @@
     },
     "routes": [],
     "coverage": {
-        "count": 4,
+        "count": 3,
         "status": "low",
         "files": [
             {
@@ -1003,7 +1270,7 @@
                 "linktype": "component",
                 "name": "AppComponent",
                 "coveragePercent": 0,
-                "coverageCount": "0/1",
+                "coverageCount": "0/2",
                 "status": "low"
             },
             {
@@ -1017,7 +1284,142 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/shared/auth.guard.ts",
+                "filePath": "src/app/components/button/button.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ButtonComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/3",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/button/button.model.ts",
+                "type": "class",
+                "linktype": "classe",
+                "name": "ButtonConfig",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/detailed-list/detailed-list.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "DetailedListComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/groups/group-item/group-item.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "GroupItemComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/groups/group-item/group-item.model.ts",
+                "type": "interface",
+                "linktype": "interface",
+                "name": "IGroupItem",
+                "coveragePercent": 0,
+                "coverageCount": "0/4",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/groups/groups.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "GroupsComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/2",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/header/header.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "HeaderComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/search-input/search.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "SearchComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/selection-list/list-item/list-item.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ListItemComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/selection-list/list.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ListComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/title/title.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "TitleComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/toolbar/toolbar.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "ToolbarComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/user-info/user-image/user-image.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "UserImageComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/user-info/user-info.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "UserInfoComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/components/user-info/user-name/user-name.component.ts",
+                "type": "component",
+                "linktype": "component",
+                "name": "UserNameComponent",
+                "coveragePercent": 0,
+                "coverageCount": "0/1",
+                "status": "low"
+            },
+            {
+                "filePath": "src/app/guards/auth.guard.ts",
                 "type": "variable",
                 "linktype": "miscellaneous",
                 "linksubtype": "variable",
@@ -1027,118 +1429,19 @@
                 "status": "low"
             },
             {
-                "filePath": "src/app/shared/components/button/button.component.ts",
+                "filePath": "src/app/pages/auth/auth.component.ts",
                 "type": "component",
                 "linktype": "component",
-                "name": "ButtonComponent",
+                "name": "AuthComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"
             },
             {
-                "filePath": "src/app/shared/components/groups/group/group.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "GroupComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/shared/components/groups/groups.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "GroupsComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/shared/components/header/header.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "HeaderComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/shared/components/list/list-item/list-item.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "ListItemComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/shared/components/list/list.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "ListComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/shared/components/login/login.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "LoginComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/shared/components/main/main.component.ts",
+                "filePath": "src/app/pages/main/main.component.ts",
                 "type": "component",
                 "linktype": "component",
                 "name": "MainComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/2",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/shared/components/search/search.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "SearchComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/shared/components/title/title.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "TitleComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/shared/components/user-info/user-image/user-image.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "UserImageComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/shared/components/user-info/user-info.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "UserInfoComponent",
-                "coveragePercent": 0,
-                "coverageCount": "0/1",
-                "status": "low"
-            },
-            {
-                "filePath": "src/app/shared/components/user-info/user-name/user-name.component.ts",
-                "type": "component",
-                "linktype": "component",
-                "name": "UserNameComponent",
                 "coveragePercent": 0,
                 "coverageCount": "0/1",
                 "status": "low"

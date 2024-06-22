@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
-import {IButtonConfig} from "./button.model";
+import {ButtonConfig} from "./button.model";
 
 @Component({
   selector: 'app-button',
@@ -14,5 +14,5 @@ import {IButtonConfig} from "./button.model";
   styleUrl: './button.component.scss'
 })
 export class ButtonComponent<P> {
-  @Input({required: true}) config: IButtonConfig<P>;
+  @Input({required: true}) config: ButtonConfig<P>;
 }
