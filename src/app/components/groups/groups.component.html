@@ -1,3 +1,5 @@
-@for (group of groups; track group.name) {
-  <app-group-item [group]="group"></app-group-item>
-}
+<section class="todo-groups">
+  @for (group of groups; track group.name) {
+    <app-group-item [groupItem]="group"></app-group-item>
+  }
+</section>

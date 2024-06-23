@@ -1,3 +1,13 @@
 .todo-group {
+  padding: .5rem;
   border: 1px solid black;
+  border-radius: 10px;
+  background-color: rgba(70, 70, 70, 0.3);
+  div {
+    mat-icon {
+      background-color: white;
+      border-radius: 50%;
+    }
+  }
+
 }

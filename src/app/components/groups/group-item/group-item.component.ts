@@ -18,5 +18,5 @@ import {MatIcon} from "@angular/material/icon";
   styleUrl: './group-item.component.scss'
 })
 export class GroupItemComponent {
- @Input({required: true}) group: IGroupItem;
+ @Input({required: true}) groupItem: IGroupItem;
 }

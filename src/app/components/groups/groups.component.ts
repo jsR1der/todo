@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {IGroupItem} from "./group-item/group-item.model";
 import {GroupItemComponent} from "./group-item/group-item.component";
 
@@ -12,9 +12,30 @@ import {GroupItemComponent} from "./group-item/group-item.component";
   styleUrl: './groups.component.scss'
 })
 export class GroupsComponent {
- public groups: IGroupItem[] = [
-   {icon: '',
-   name: 'Test',
-   containItems: 10}
- ]
+  public groups: IGroupItem[] = [
+    {
+      icon: '',
+      iconColor: 'red',
+      name: 'Test',
+      containItems: 10
+    },
+    {
+      icon: '',
+      iconColor: 'red',
+      name: 'Test',
+      containItems: 10
+    },
+    {
+      icon: '',
+      iconColor: 'red',
+      name: 'Test',
+      containItems: 10
+    },
+    {
+      icon: '',
+      iconColor: 'red',
+      name: 'Test',
+      containItems: 10
+    }
+  ]
 }
