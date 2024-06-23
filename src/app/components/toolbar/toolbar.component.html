@@ -1,1 +1,5 @@
-<p>toolbar works!</p>
+<section class="toolbar flex justify-end items-center">
+  @for (action of actions; track action.iconName) {
+    <mat-icon class="cursor-pointer" (click)="action.action()">{{action.iconName}}</mat-icon>
+  }
+</section>
