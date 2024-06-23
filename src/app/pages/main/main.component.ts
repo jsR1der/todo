@@ -8,6 +8,7 @@ import {ButtonComponent} from "../../components/button/button.component";
 import {HeaderComponent} from "../../components/header/header.component";
 import {DetailedListComponent} from "../../components/detailed-list/detailed-list.component";
 import {ToolbarComponent} from "../../components/toolbar/toolbar.component";
+import {HeaderType, TailwindFontSizeEnum} from "../../models/tailwind.model";
 
 @Component({
   selector: 'app-main',
@@ -28,4 +29,12 @@ import {ToolbarComponent} from "../../components/toolbar/toolbar.component";
   styleUrl: './main.component.scss'
 })
 export class MainComponent {
+  protected readonly TailwindFontSizeEnum = TailwindFontSizeEnum;
+  protected readonly HeaderType = HeaderType;
+
+  //todo replace later
+  public action(): void {
+    console.log(`action`)
+  }
+
 }

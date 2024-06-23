@@ -5,12 +5,16 @@
               opened="true">
     <app-user-info></app-user-info>
     <app-groups></app-groups>
-    <app-header></app-header>
+    <app-header [config]="{title: 'header1',fontSize: TailwindFontSizeEnum.xs, type: HeaderType.Custom}">
+      <app-button [config]="{iconName: 'add',color: 'primary',action: action.bind(this)}"></app-button>
+    </app-header>
     <app-selection-list></app-selection-list>
   </mat-drawer>
   <main class="p-4">
     <app-toolbar></app-toolbar>
-    <app-header></app-header>
+    <app-header [config]="{title: 'header2',fontSize: TailwindFontSizeEnum.sm, type: HeaderType.Custom}">
+      <app-button [config]="{iconName: 'add',color: 'primary',action: action.bind(this)}"></app-button>
+    </app-header>
     <app-detailed-list></app-detailed-list>
   </main>
 
