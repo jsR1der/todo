@@ -8,7 +8,8 @@ import {ButtonComponent} from "../../components/button/button.component";
 import {HeaderComponent} from "../../components/header/header.component";
 import {DetailedListComponent} from "../../components/detailed-list/detailed-list.component";
 import {ToolbarComponent} from "../../components/toolbar/toolbar.component";
-import {HeaderType, TailwindFontSizeEnum} from "../../models/tailwind.model";
+import {TitleType, TailwindFontSizeEnum} from "../../models/tailwind.model";
+import {TitleComponent} from "../../components/title/title.component";
 
 @Component({
   selector: 'app-main',
@@ -23,14 +24,15 @@ import {HeaderType, TailwindFontSizeEnum} from "../../models/tailwind.model";
     ButtonComponent,
     HeaderComponent,
     DetailedListComponent,
-    ToolbarComponent
+    ToolbarComponent,
+    TitleComponent
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss'
 })
 export class MainComponent {
   protected readonly TailwindFontSizeEnum = TailwindFontSizeEnum;
-  protected readonly HeaderType = HeaderType;
+  protected readonly HeaderType = TitleType;
 
   //todo replace later
   public action(): void {

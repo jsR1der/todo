@@ -6,7 +6,7 @@ export enum TailwindFontSizeEnum {
   xl = 5,
 }
 
-export enum HeaderType {
+export enum TitleType {
   H1 = 1,
   H2 = 2,
   H3 = 3,
