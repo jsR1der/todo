@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {MatDrawer, MatDrawerContainer} from "@angular/material/sidenav";
 import {MatButton} from "@angular/material/button";
 import {UserInfoComponent} from "../../components/user-info/user-info.component";
@@ -8,7 +8,7 @@ import {ButtonComponent} from "../../components/button/button.component";
 import {HeaderComponent} from "../../components/header/header.component";
 import {DetailedListComponent} from "../../components/detailed-list/detailed-list.component";
 import {ToolbarComponent} from "../../components/toolbar/toolbar.component";
-import {TitleType, TailwindFontSizeEnum} from "../../models/tailwind.model";
+import {TailwindFontSizeEnum, TitleType} from "../../models/tailwind.model";
 import {TitleComponent} from "../../components/title/title.component";
 
 @Component({
@@ -28,7 +28,8 @@ import {TitleComponent} from "../../components/title/title.component";
     TitleComponent
   ],
   templateUrl: './main.component.html',
-  styleUrl: './main.component.scss'
+  styleUrl: './main.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class MainComponent {
   protected readonly TailwindFontSizeEnum = TailwindFontSizeEnum;
