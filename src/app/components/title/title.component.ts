@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {NgSwitch, NgSwitchCase, NgSwitchDefault, NgTemplateOutlet} from "@angular/common";
-import {TailwindFontSizeEnum, TitleType} from "../../models/tailwind.model";
+import {TailwindFontSizeEnum} from "../../models/tailwind.model";
 import {ITitleConfig} from "./title.model";
 
 @Component({

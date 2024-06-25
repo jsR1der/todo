@@ -1,4 +1,4 @@
-<section class="flex justify-between items-center">
+<section class="flex justify-start items-center gap-4 pb-4">
   <app-user-image></app-user-image>
-  <app-user-name></app-user-name>
+  <app-title [config]="{type: TitleType.Custom, size: TailwindFontSizeEnum.sm, title: 'UserName'}"></app-title>
 </section>

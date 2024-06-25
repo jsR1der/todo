@@ -1,4 +1,4 @@
-<section class="toolbar flex justify-end items-center">
+<section class="toolbar flex justify-end items-center pb-4">
   @for (action of actions; track action.iconName) {
     <mat-icon class="cursor-pointer" (click)="action.action()">{{action.iconName}}</mat-icon>
   }
