@@ -6,7 +6,7 @@ import {GroupsComponent} from "../../components/groups/groups.component";
 import {ListComponent} from "../../components/selection-list/list.component";
 import {ButtonComponent} from "../../components/button/button.component";
 import {HeaderComponent} from "../../components/header/header.component";
-import {DetailedListComponent} from "../../components/detailed-list/detailed-list.component";
+import {ExpansionListComponent} from "../../components/expansion-list/expansion-list.component";
 import {ToolbarComponent} from "../../components/toolbar/toolbar.component";
 import {TailwindFontSizeEnum, TitleType} from "../../models/tailwind.model";
 import {TitleComponent} from "../../components/title/title.component";
@@ -23,7 +23,7 @@ import {TitleComponent} from "../../components/title/title.component";
     ListComponent,
     ButtonComponent,
     HeaderComponent,
-    DetailedListComponent,
+    ExpansionListComponent,
     ToolbarComponent,
     TitleComponent
   ],

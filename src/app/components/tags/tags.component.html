@@ -1,0 +1,7 @@
+<section class="tags-container flex justify-start items-center gap-2">
+  @for (tag of tags; track tag) {
+    <app-tag [tag]="tag"></app-tag>
+  }
+  <app-input [config]="{control: tagsService.tagControl,events:['keydown','input']}"></app-input>
+</section>
+

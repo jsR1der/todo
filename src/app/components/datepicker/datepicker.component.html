@@ -1,0 +1,25 @@
+<!--<mat-form-field appearance="fill" class="app-datepicker">-->
+<!--&lt;!&ndash;  <mat-label>Choose a date</mat-label>&ndash;&gt;-->
+<!--  <input placeholder="date format by user locale" matInput [matDatepicker]="datepicker">-->
+<!--&lt;!&ndash;  <mat-hint>MM/DD/YYYY</mat-hint>&ndash;&gt;-->
+<!--  <mat-datepicker-toggle matIconPrefix [for]="datepicker"></mat-datepicker-toggle>-->
+<!--  <mat-datepicker #datepicker>-->
+<!--    <mat-datepicker-actions>-->
+<!--      <button mat-button matDatepickerCancel>Cancel</button>-->
+<!--      <button mat-raised-button color="primary" matDatepickerApply>Apply</button>-->
+<!--    </mat-datepicker-actions>-->
+<!--  </mat-datepicker>-->
+<!--</mat-form-field>-->
+
+<div class="app-form-control-wrapper flex start items-center gap-4">
+<!--  <mat-datepicker-toggle [for]="datepicker"></mat-datepicker-toggle>-->
+  <mat-icon (click)="datepicker.open()">home</mat-icon>
+  <input placeholder="date format by user locale" matInput [matDatepicker]="datepicker">
+  <!--  <mat-hint>MM/DD/YYYY</mat-hint>-->
+  <mat-datepicker #datepicker>
+    <mat-datepicker-actions>
+      <button mat-button matDatepickerCancel>Cancel</button>
+      <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+    </mat-datepicker-actions>
+  </mat-datepicker>
+</div>
