@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
 import {MatDrawer, MatDrawerContainer} from "@angular/material/sidenav";
 import {MatButton} from "@angular/material/button";
 import {UserInfoComponent} from "../../components/user-info/user-info.component";
@@ -10,6 +10,8 @@ import {ExpansionListComponent} from "../../components/expansion-list/expansion-
 import {ToolbarComponent} from "../../components/toolbar/toolbar.component";
 import {TailwindFontSizeEnum, TitleType} from "../../models/tailwind.model";
 import {TitleComponent} from "../../components/title/title.component";
+import {MainService} from "./main.service";
+import {ButtonConfig} from "../../components/button/button.model";
 
 @Component({
   selector: 'app-main',
@@ -29,15 +31,28 @@ import {TitleComponent} from "../../components/title/title.component";
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
+  providers: [MainService]
 })
-export class MainComponent {
+export class MainComponent implements OnInit {
+  public headerButtonConfig: ButtonConfig;
   protected readonly TailwindFontSizeEnum = TailwindFontSizeEnum;
   protected readonly HeaderType = TitleType;
 
-  //todo replace later
-  public action(): void {
-    console.log(`action`)
+  constructor(private mainService: MainService) {
   }
+
+  public action(): void {
+    console.log(`click`)
+  }
+
+  ngOnInit() {
+    this.headerButtonConfig = this.mainService.buildButtonConfig({
+      iconName: 'add',
+      color: 'primary',
+      action: this.action.bind(this)
+    })
+  }
+
 
 }

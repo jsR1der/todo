@@ -7,7 +7,7 @@
     <app-groups></app-groups>
     <app-header>
       <app-title class="title" [config]="{title: 'header1',size: TailwindFontSizeEnum.xs, type: HeaderType.Custom}"></app-title>
-      <app-button class="button" [config]="{iconName: 'add',color: 'primary',action: action.bind(this)}"></app-button>
+      <app-button class="button" [config]="headerButtonConfig"></app-button>
     </app-header>
     <app-selection-list></app-selection-list>
   </mat-drawer>

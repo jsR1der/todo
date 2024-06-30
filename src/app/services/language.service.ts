@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {WINDOW} from "../../constants/global";
+import {WINDOW} from "../constants/global";
 
 @Injectable()
 export class LanguageService {

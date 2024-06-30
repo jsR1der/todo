@@ -1,7 +1,6 @@
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, ViewChild} from '@angular/core';
 import {ReactiveFormsModule} from "@angular/forms";
 import {InputConfig} from "./input.model";
-import {Subject} from "rxjs";
 import {InputService} from "./input.service";
 
 @Component({
@@ -14,10 +13,9 @@ import {InputService} from "./input.service";
   styleUrl: './input.component.scss',
   providers: []
 })
-export class InputComponent<T> implements AfterViewInit, OnDestroy {
+export class InputComponent<T> implements AfterViewInit {
   @ViewChild('input') inputRef: ElementRef<HTMLInputElement>;
   @Input({required: true}) config: InputConfig<T>;
-  private readonly unsubscribeAll$ = new Subject<void>();
 
   constructor(private inputService: InputService) {
   }
@@ -26,11 +24,6 @@ export class InputComponent<T> implements AfterViewInit, OnDestroy {
     this.inputService.input = this.inputRef.nativeElement;
     this.inputService.setInput(this.inputRef)
     this.inputService.setEvents(this.config.events);
-  }
-
-  ngOnDestroy() {
-    this.unsubscribeAll$.next();
-    this.unsubscribeAll$.complete()
   }
 
 }

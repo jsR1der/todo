@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {MatIconButton} from "@angular/material/button";
 import {MatIcon} from "@angular/material/icon";
 import {ButtonConfig} from "./button.model";
@@ -13,6 +13,6 @@ import {ButtonConfig} from "./button.model";
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss'
 })
-export class ButtonComponent<P> {
-  @Input({required: true}) config: ButtonConfig<P>;
+export class ButtonComponent{
+  @Input({required: true}) config: ButtonConfig;
 }
