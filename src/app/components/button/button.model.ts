@@ -20,9 +20,7 @@ export class ButtonConfigBuilder {
   }
 
   public setupConfig(data: ButtonConfig): void {
-    this.buildingConfig.iconName = data.iconName;
-    this.buildingConfig.color = data.color;
-    this.buildingConfig.action = data.action;
+    this.buildingConfig = data;
   }
 
   get config(): ButtonConfig {

@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -23,13 +23,15 @@ import {TodoComponent} from "../todo/todo.component";
     TodoComponent
   ],
   templateUrl: './expansion-list.component.html',
-  styleUrl: './expansion-list.component.scss'
+  styleUrl: './expansion-list.component.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class ExpansionListComponent {
   public items: ExpansionList[] = [{
     name: 'First',
     todoList: [
       {
+        id: 1,
         isCompleted: false,
         title: 'UndoneTask',
         description: 'Description here',
@@ -37,6 +39,7 @@ export class ExpansionListComponent {
         date: new Date().toISOString(),
       },
       {
+        id: 2,
         isCompleted: true,
         title: 'DoneTask',
         description: 'Description here',

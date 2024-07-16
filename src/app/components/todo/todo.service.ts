@@ -8,7 +8,7 @@ export class TodoService {
   constructor(private fb: NonNullableFormBuilder) {
   }
 
-  public setTodoDescriptionControl(initialValue: string = 'Enter description'): void {
+  public setTodoDescriptionControl(initialValue: string = ''): void {
     this.todoDescriptionControl = this.fb.control(initialValue);
   }
 }

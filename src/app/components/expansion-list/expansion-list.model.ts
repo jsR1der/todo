@@ -4,6 +4,7 @@ export interface ExpansionList {
 }
 
 export interface TodoItem {
+  id?: number;
   isCompleted: boolean
   title: string;
   description: string;

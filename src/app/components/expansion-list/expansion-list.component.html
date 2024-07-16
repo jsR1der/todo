@@ -1,8 +1,8 @@
 <mat-accordion multi>
   @for (item of items;track item.name) {
 
-    <mat-expansion-panel expanded="true">
-      <mat-expansion-panel-header>
+    <mat-expansion-panel class="app-expansion-panel !m-0" expanded="false">
+      <mat-expansion-panel-header expandedHeight="48px" class="app-expansion-header">
         {{ item.name }}
       </mat-expansion-panel-header>
       @for(todo of item.todoList;track todo.title) {
@@ -10,4 +10,10 @@
       }
     </mat-expansion-panel>
   }
+  <mat-expansion-panel  class="app-expansion-panel !m-0" expanded="true">
+    <mat-expansion-panel-header expandedHeight="48px" class="app-expansion-header">
+      New
+    </mat-expansion-panel-header>
+      <app-todo></app-todo>
+  </mat-expansion-panel>
 </mat-accordion>
