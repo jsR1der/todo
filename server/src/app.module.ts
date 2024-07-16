@@ -1,15 +1,11 @@
-import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-<<<<<<< HEAD
-
-@Module({
-  imports: [],
-=======
-import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppService } from './app.service';
+import { AppController } from './app.controller';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { Module } from '@nestjs/common';
 
 @Module({
+  controllers: [AppController],
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
@@ -30,8 +26,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       }),
     }),
   ],
->>>>>>> 680c8cb (remove .env)
-  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}

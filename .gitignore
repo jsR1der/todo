@@ -14,6 +14,7 @@ yarn-error.log
 # nest
 /server/node_modules
 /server/.env
+/server/dist
 
 # IDEs and editors
 .idea/
