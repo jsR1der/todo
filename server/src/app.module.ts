@@ -3,6 +3,9 @@ import { AppService } from './app.service';
 import { AppController } from './app.controller';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { Module } from '@nestjs/common';
+import { UsersModule } from './routes/users/users.module';
+import { DataSource } from 'typeorm';
+import { Users } from './routes/users/user.entity';
 
 @Module({
   controllers: [AppController],
@@ -18,14 +21,17 @@ import { Module } from '@nestjs/common';
         port: configService.get<number>('DBPORT'),
         password: configService.get<string>('PGPASSWORD'),
         username: configService.get<string>('PGUSER'),
-        entities: [],
+        entities: [Users],
         database: configService.get<string>('PGDATABASE'),
         synchronize: configService.get<boolean>('synchronize'),
         logging: configService.get<boolean>('logging'),
         ssl: configService.get<boolean>('ssl'),
       }),
     }),
+    UsersModule,
   ],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(private readonly dataSource: DataSource) {}
+}
