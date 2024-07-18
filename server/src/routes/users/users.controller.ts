@@ -17,6 +17,7 @@ export class UsersController {
 
   @Post()
   public async create(@Body() createUserDto: CreateUserDto) {
+    console.log(createUserDto);
     try {
       await this.usersService.create(createUserDto);
       return {
@@ -36,7 +37,7 @@ export class UsersController {
 
   @Get(':id')
   public async findOne(@Param('id') id: string) {
-    return await this.usersService.findOne(+id);
+    return await this.usersService.findOne('id', +id);
   }
 
   @Patch(':id')
