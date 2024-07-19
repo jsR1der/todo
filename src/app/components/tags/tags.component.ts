@@ -1,9 +1,10 @@
-import {AfterViewInit, Component, Input} from '@angular/core';
+import {AfterViewInit, Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {TagComponent} from "../tag/tag.component";
 import {NgTemplateOutlet} from "@angular/common";
 import {InputComponent} from "../input/input.component";
-import {InputService} from "../input/input.service";
 import {TagsService} from "./tags.service";
+import {InputConfig, InputConfigBuilder} from "../input/input.model";
+import {merge, Subject, takeUntil} from "rxjs";
 
 @Component({
   selector: 'app-tags',
@@ -15,24 +16,32 @@ import {TagsService} from "./tags.service";
   ],
   templateUrl: './tags.component.html',
   styleUrl: './tags.component.scss',
-  providers: [InputService]
 })
-export class TagsComponent implements AfterViewInit {
+export class TagsComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input({required: true}) tags: string[];
+  public inputConfig: InputConfig<string>;
+
+  public unsubAll$ = new Subject<void>()
 
   constructor(
-    public tagsService: TagsService,
-    private inputService: InputService) {
+    public tagsService: TagsService) {
   }
 
+  ngOnInit() {
+    this.inputConfig = new InputConfigBuilder<string>(['keydown', 'focusout'], this.tagsService.tagControl, "New tag")
+  }
 
   ngAfterViewInit() {
-    this.inputService.events$['keydown'].pipe().subscribe((event: Event) => {
-      this.tagsService.keyboardEventHandler(event, this.pushNewTag.bind(this));
-    })
+    const {keydown, focusout} = this.inputConfig.outputEvents;
+    merge(keydown, focusout).pipe(takeUntil(this.unsubAll$)).subscribe(e => this.tagsService.handleInputEvents(e, this.pushNewTag.bind(this)))
   }
 
   private pushNewTag(tagName: string): void {
-    this.tags.push(tagName);
+    this.tags.push(tagName)
+  }
+
+  ngOnDestroy() {
+    this.unsubAll$.next();
+    this.unsubAll$.complete()
   }
 }

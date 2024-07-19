@@ -5,8 +5,8 @@ import {DatepickerComponent} from "../datepicker/datepicker.component";
 import {TagsComponent} from "../tags/tags.component";
 import {InputComponent} from "../input/input.component";
 import {TodoService} from "./todo.service";
-import {InputService} from "../input/input.service";
 import {MatCheckbox} from "@angular/material/checkbox";
+import {InputConfig, InputConfigBuilder} from "../input/input.model";
 
 @Component({
   selector: 'app-todo',
@@ -21,14 +21,22 @@ import {MatCheckbox} from "@angular/material/checkbox";
   ],
   templateUrl: './todo.component.html',
   styleUrl: './todo.component.scss',
-  providers: [TodoService,InputService]
+  providers: [TodoService]
 })
-export class TodoComponent implements OnInit{
+export class TodoComponent implements OnInit {
   @Input() todo: TodoItem;
+  public inputConfig: InputConfig<string>
 
   constructor(public todoService: TodoService) {
   }
+
   ngOnInit() {
     this.todoService.setTodoDescriptionControl(this.todo?.description);
+    this.inputConfig = new InputConfigBuilder<string>(['focusout'], this.todoService.todoDescriptionControl, "Enter description")
   }
+
+  public onConfiguration(): void {
+    this.inputConfig.outputEvents['focusout'].subscribe()
+  }
+
 }

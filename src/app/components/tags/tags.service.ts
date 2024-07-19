@@ -10,12 +10,18 @@ export class TagsService {
   constructor(private fb: NonNullableFormBuilder) {
   }
 
-  public keyboardEventHandler(event: Event, callback: (value: string) => void): void {
+  public handleInputEvents(event: Event, callback: (value: string) => void): void {
 
-    if ((event as KeyboardEvent).key === ' ') {
+    if (event instanceof KeyboardEvent && event.key === ' ') {
       callback(this.tagControl.value)
-      this.tagControl.reset()
+      this.tagControl.reset();
     }
+
+    if (event instanceof FocusEvent) {
+      callback(this.tagControl.value);
+      this.tagControl.reset();
+    }
+
   }
 
 

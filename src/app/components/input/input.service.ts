@@ -1,23 +1,23 @@
 import {ElementRef, Injectable} from '@angular/core';
-import {fromEvent, Observable} from "rxjs";
+import {fromEvent} from "rxjs";
+import {InputConfig, OutputEventKey} from "./input.model";
 
 @Injectable()
 export class InputService {
-  public input: HTMLInputElement | null = null;
-  public events$: Record<string, Observable<Event>> = {}
 
   constructor() {
   }
 
-  public setEvents(events: string[]): void {
-    events.forEach(eventName => {
-      if (this.input) {
-        this.events$[eventName] = fromEvent(this.input, eventName)
+  public setEvents<T>(config: InputConfig<T>): void {
+    config.inputEvents.forEach((eventName: OutputEventKey) => {
+      if (config.inputRef) {
+        config.outputEvents[eventName] = fromEvent(config.inputRef, eventName)
       }
     })
   }
 
-  public setInput(inputRef: ElementRef<HTMLInputElement>): void {
-    this.input = inputRef.nativeElement;
+  public setInputRef<T>(inputRef: ElementRef<HTMLInputElement>, config: InputConfig<T>): void {
+    config.inputRef = inputRef.nativeElement;
   }
+
 }

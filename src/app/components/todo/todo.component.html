@@ -3,8 +3,9 @@
   <!--todo focus out event for input-->
   <app-input
     *ngIf="!todo?.id"
-    [config]="{control: todoService.todoDescriptionControl,events: [],placeholder: 'Enter description'}"></app-input>
-  <div *ngIf="todo?.id">{{ todoService.todoDescriptionControl?.value }}</div>
+    (afterConfiguration)="onConfiguration()"
+    [config]="inputConfig"></app-input>
+  <div *ngIf="todo?.id">{{ todoService.todoDescriptionControl.value }}</div>
   <app-tags [tags]="todo?.tags ? todo.tags : []"></app-tags>
   <app-datepicker></app-datepicker>
 </div>

@@ -2,6 +2,6 @@
   @for (tag of tags; track tag) {
     <app-tag [tag]="tag"></app-tag>
   }
-  <app-input [config]="{control: tagsService.tagControl,events:['keydown','input']}"></app-input>
+  <app-input [config]="inputConfig"></app-input>
 </section>
 
