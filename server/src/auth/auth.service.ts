@@ -1,10 +1,15 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import {
+  HttpException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { UsersService } from '../routes/users/users.service';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as bcrypt from 'bcrypt';
 import { User } from '../routes/users/user.entity';
 import { Request } from 'express';
+import { SignUpInResponse } from './auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -16,22 +21,29 @@ export class AuthService {
     private configService: ConfigService,
   ) {}
 
-  public async signIn(name: string, pass: string): Promise<any> {
+  public async signUp(name: string, pass: string): Promise<SignUpInResponse> {
     const userExist = await this.userService.findOne('name', name);
     if (userExist) {
       throw new Error(`User with name ${name} already exist`);
     }
     const user = await this.userService.create({ name, pass });
-
-    const accessToken = await this.createToken(user.id, user.name);
-    const refreshToken = await this.createToken(user.id, user.name);
-    await this.storeRefreshToken(refreshToken, user);
-    return accessToken;
+    const token = await this.createToken(user.id, user.name);
+    const { pass, ...userWithoutPass } = user;
+    return { token, user: userWithoutPass };
   }
 
-  public async logIn(name: string, pass: string): Promise<any> {
+  public async signIn(name: string, pass: string): Promise<SignUpInResponse> {
     const user = await this.validateUser(name, pass);
-    return await this.setupTokens(user);
+    const token = await this.createToken(user.id, user.name);
+    const { pass, ...userWithoutPass } = user;
+    return { token, user: userWithoutPass };
+  }
+
+  public isTokenValid(token: string): boolean {
+    if (this.tokenBlackList.has(token) || !token) {
+      throw new UnauthorizedException();
+    }
+    return true;
   }
 
   private async createToken(userId: number, name: string): Promise<string> {
@@ -40,18 +52,6 @@ export class AuthService {
       secret: this.configService.get<string>('secret'),
       expiresIn: '30s',
     });
-  }
-
-  public async setupTokens(user: User): Promise<any> {
-    const accessToken = await this.createToken(user.id, user.name);
-    const refreshToken = await this.createToken(user.id, user.name);
-
-    await this.storeRefreshToken(refreshToken, user);
-    return accessToken;
-  }
-
-  private async storeRefreshToken(token: string, user: User): Promise<any> {
-    await this.userService.update(user.id, { ...user, refresh_token: token });
   }
 
   public async validateUser(name: string, pass: string): Promise<User> {
@@ -71,11 +71,11 @@ export class AuthService {
     return type === 'Bearer' ? token : undefined;
   }
 
-  public async logout(req: Request): Promise<any> {
+  public async signOut(req: Request): Promise<any> {
     const token = this.extractTokenFromHeader(req);
     const decoded = this.jwtService.decode(token);
     this.tokenBlackList.add(token);
-    await this.userService.update(decoded.sub, { refresh_token: null });
+    // await this.userService.update(decoded.sub, { refresh_token: null });
     return `User with id ${decoded.sub} was logged out`;
   }
 }

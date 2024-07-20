@@ -7,7 +7,7 @@
     <app-groups></app-groups>
     <app-header>
       <app-title class="title" [config]="{title: 'header1',size: TailwindFontSizeEnum.xs, type: HeaderType.Custom}"></app-title>
-      <app-button class="button" [config]="headerButtonConfig"></app-button>
+      <app-icon-button class="button" [config]="headerButtonConfig"></app-icon-button>
     </app-header>
     <app-selection-list></app-selection-list>
   </mat-drawer>
@@ -15,7 +15,7 @@
     <app-toolbar></app-toolbar>
     <app-header>
       <app-title class="title" [config]="{title: 'header2',size: TailwindFontSizeEnum.base, type: HeaderType.Custom}"></app-title>
-      <app-button class="button" [config]="{iconName: 'add',color: 'primary',action: action.bind(this)}"></app-button>
+      <app-icon-button class="button" [config]="{iconName: 'add',color: 'primary',action: action.bind(this)}"></app-icon-button>
     </app-header>
     <app-expansion-list></app-expansion-list>
   </main>

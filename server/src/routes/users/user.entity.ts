@@ -10,6 +10,4 @@ export class User {
   photo: string | null;
   @Column('text')
   pass: string;
-  @Column({ type: 'text', nullable: true })
-  refresh_token: string;
 }

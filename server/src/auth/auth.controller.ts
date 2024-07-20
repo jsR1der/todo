@@ -6,27 +6,36 @@ import {
   HttpStatus,
   Post,
   Req,
+  Res,
   UseGuards,
+  UseInterceptors,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { SignInDto } from './auth.dto';
+import { SignUpDto } from './auth.dto';
 import { AuthGuard } from './auth.guard';
-import { Request } from 'express';
+import { Request, Response } from 'express';
+import { GlobalInterceptor } from '../global/global.interceptor';
+import { UtilityService } from '../services/unility/utility.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private readonly utilityService: UtilityService,
+  ) {}
 
   @HttpCode(HttpStatus.OK)
-  @Post('signIn')
-  signIn(@Body() signInDto: SignInDto) {
-    return this.authService.signIn(signInDto.name, signInDto.pass);
+  @Post('signUp')
+  signIn(@Body() signInDto: SignUpDto) {
+    return this.authService.signUp(signInDto.name, signInDto.pass);
   }
 
   @HttpCode(HttpStatus.OK)
-  @Post('login')
-  logIn(@Body() signInDto: SignInDto) {
-    return this.authService.logIn(signInDto.name, signInDto.pass);
+  @Post('signIn')
+  @UseInterceptors(GlobalInterceptor)
+  public async logIn(@Body() signInDto: SignUpDto, @Res() res: Response) {
+    const token = await this.authService.signIn(signInDto.name, signInDto.pass);
+    return res.json(token);
   }
 
   @UseGuards(AuthGuard)
@@ -36,8 +45,8 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard)
-  @Get('logout')
+  @Get('signOut')
   public async logout(@Req() request: Request) {
-    return await this.authService.logout(request);
+    return await this.authService.signOut(request);
   }
 }

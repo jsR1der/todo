@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ButtonConfig, ButtonConfigBuilder, ButtonDirector} from "../../components/button/button.model";
+import {ButtonConfig, ButtonConfigBuilder, ButtonDirector} from "../../components/icon-button/button.model";
 
 @Injectable()
 export class MainService {

@@ -1,4 +1,11 @@
-<div class="app-input width-full px-2">
-  <input [formControl]="config.control" #input type="text"
-         [placeholder]="config.placeholder ? config.placeholder :'Enter text...'">
+<div class="app-input width-full" [ngStyle]="config?.styles?.container || {}">
+  <mat-form-field appearance="fill">
+    <mat-label>{{config.placeholder ? config.placeholder : 'Enter text...'}}</mat-label>
+    <input [formControl]="config.control" #input [type]="config.type" matInput
+           [ngStyle]="config?.styles?.input || {}">
+    <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+    @for (e of config.control.errors | errorConverter; track e) {
+      <mat-error>{{ e }}</mat-error>
+    }
+  </mat-form-field>
 </div>

@@ -28,7 +28,7 @@ export class TagsComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnInit() {
-    this.inputConfig = new InputConfigBuilder<string>(['keydown', 'focusout'], this.tagsService.tagControl, "New tag")
+    this.inputConfig = new InputConfigBuilder<string>().setControl(this.tagsService.tagControl).addEvents(['keydown', 'focusout']).addPlaceholder("New tag")
   }
 
   ngAfterViewInit() {

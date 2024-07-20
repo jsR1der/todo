@@ -277,7 +277,7 @@ test.describe('Counter', () => {
   });
 });
 
-test.describe('Clear completed button', () => {
+test.describe('Clear completed icon-button', () => {
   test.beforeEach(async ({ page }) => {
     await createDefaultTodos(page);
   });
@@ -349,7 +349,7 @@ test.describe('Routing', () => {
     await expect(todoItem).toHaveText([TODO_ITEMS[0], TODO_ITEMS[2]]);
   });
 
-  test('should respect the back button', async ({ page }) => {
+  test('should respect the back icon-button', async ({ page }) => {
     const todoItem = page.getByTestId('todo-item');
     await page.getByTestId('todo-item').nth(1).getByRole('checkbox').check();
 

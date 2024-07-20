@@ -4,14 +4,14 @@ import {MatButton} from "@angular/material/button";
 import {UserInfoComponent} from "../../components/user-info/user-info.component";
 import {GroupsComponent} from "../../components/groups/groups.component";
 import {ListComponent} from "../../components/selection-list/list.component";
-import {ButtonComponent} from "../../components/button/button.component";
+import {IconButtonComponent} from "../../components/icon-button/icon-button.component";
 import {HeaderComponent} from "../../components/header/header.component";
 import {ExpansionListComponent} from "../../components/expansion-list/expansion-list.component";
 import {ToolbarComponent} from "../../components/toolbar/toolbar.component";
 import {TailwindFontSizeEnum, TitleType} from "../../models/tailwind.model";
 import {TitleComponent} from "../../components/title/title.component";
 import {MainService} from "./main.service";
-import {ButtonConfig} from "../../components/button/button.model";
+import {ButtonConfig} from "../../components/icon-button/button.model";
 
 @Component({
   selector: 'app-main',
@@ -23,7 +23,7 @@ import {ButtonConfig} from "../../components/button/button.model";
     UserInfoComponent,
     GroupsComponent,
     ListComponent,
-    ButtonComponent,
+    IconButtonComponent,
     HeaderComponent,
     ExpansionListComponent,
     ToolbarComponent,

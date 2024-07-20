@@ -1,18 +1,20 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {MatIconButton} from "@angular/material/button";
+import {Component, Input} from '@angular/core';
 import {MatIcon} from "@angular/material/icon";
-import {ButtonConfig} from "./button.model";
+import {MatButton, MatIconButton} from "@angular/material/button";
 
 @Component({
   selector: 'app-button',
   standalone: true,
   imports: [
+    MatIcon,
     MatIconButton,
-    MatIcon
+    MatButton
   ],
   templateUrl: './button.component.html',
   styleUrl: './button.component.scss'
 })
-export class ButtonComponent{
-  @Input({required: true}) config: ButtonConfig;
+export class ButtonComponent {
+@Input() color: string;
+@Input() type: string;
+
 }

@@ -32,7 +32,7 @@ export class TodoComponent implements OnInit {
 
   ngOnInit() {
     this.todoService.setTodoDescriptionControl(this.todo?.description);
-    this.inputConfig = new InputConfigBuilder<string>(['focusout'], this.todoService.todoDescriptionControl, "Enter description")
+    this.inputConfig = new InputConfigBuilder<string>().setControl(this.todoService.todoDescriptionControl).addEvents(['focusout']).addPlaceholder("Enter description")
   }
 
   public onConfiguration(): void {
