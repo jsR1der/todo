@@ -1,5 +1,6 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {ValidationErrors} from "@angular/forms";
+import {capitalize} from "lodash";
 
 @Pipe({
   name: 'errorConverter',
@@ -14,12 +15,17 @@ export class ErrorConverterPipe implements PipeTransform {
     }
     const res: string[] = [];
     for (const i in errors) {
-      const errorMessage = errors[i];
-      if (errorMessage === true) {
-        res.push(`*${i}`)
-        continue
+      const error = errors[i];
+      if (error instanceof Object) {
+        let complicatedError: string = '* ';
+        for (const j in error) {
+          complicatedError += `${capitalize(j)}: ${error[j]} `
+        }
+        res.push(complicatedError)
       }
-      res.push(errors[i])
+      if (error === true) {
+        res.push(`*${capitalize(i)}`)
+      }
     }
     return res;
   }

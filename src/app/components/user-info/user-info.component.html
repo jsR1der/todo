@@ -1,4 +1,4 @@
 <section class="flex justify-start items-center gap-4">
-  <app-user-image></app-user-image>
+  <app-user-image (click)="logout()"></app-user-image>
   <app-title [config]="{type: TitleType.Custom, size: TailwindFontSizeEnum.sm, title: 'UserName'}"></app-title>
 </section>

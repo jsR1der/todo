@@ -15,14 +15,10 @@ import { SignUpDto } from './auth.dto';
 import { AuthGuard } from './auth.guard';
 import { Request, Response } from 'express';
 import { GlobalInterceptor } from '../global/global.interceptor';
-import { UtilityService } from '../services/unility/utility.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private authService: AuthService,
-    private readonly utilityService: UtilityService,
-  ) {}
+  constructor(private authService: AuthService) {}
 
   @HttpCode(HttpStatus.OK)
   @Post('signUp')
@@ -46,7 +42,8 @@ export class AuthController {
 
   @UseGuards(AuthGuard)
   @Get('signOut')
-  public async logout(@Req() request: Request) {
-    return await this.authService.signOut(request);
+  public async logout(@Req() request: Request, @Res() res: Response) {
+    const responseMessage = await this.authService.signOut(request);
+    res.json(responseMessage);
   }
 }

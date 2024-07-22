@@ -1,1 +1,7 @@
-<router-outlet></router-outlet>
+@if (loadingService.loadingSub | async) {
+  <mat-spinner diameter="75" class="app-spinner"></mat-spinner>
+} @else {
+  <router-outlet></router-outlet>
+}
+
+

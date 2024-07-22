@@ -2,7 +2,7 @@
   <mat-tab-group [disablePagination]="true" headerPosition="above" animationDuration="250"
                  (selectedTabChange)="onTabChange()" dynamicHeight>
     <mat-tab label="SignIn">
-      <form class="flex flex-col justify-center items-center" [formGroup]="authService.form"
+      <form class="flex flex-col justify-center items-end" [formGroup]="authService.form"
             (ngSubmit)="signIn()">
         <app-input [config]="emailInputConfig">Email</app-input>
         <app-input [config]="passwordInputConfig">Password</app-input>
@@ -10,7 +10,7 @@
       </form>
     </mat-tab>
     <mat-tab label="SignUp">
-      <form class="flex flex-col justify-center items-center" (submit)="signUp()">
+      <form class="flex flex-col justify-center items-end" (submit)="signUp()">
         <app-input [config]="emailInputConfig">Email</app-input>
         <app-input [config]="passwordInputConfig">Password</app-input>
         <app-button color="primary" type="submit"><input type="submit" value="Register"></app-button>

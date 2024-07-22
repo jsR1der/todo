@@ -2,18 +2,22 @@ import {Component, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {LanguageService} from "./services/language.service";
 import {DateTimeService} from "./services/date-time.service";
+import {LoadingService} from "./interceptors/loading/loading.service";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {AsyncPipe} from "@angular/common";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, MatProgressSpinner, AsyncPipe],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   providers: [LanguageService, DateTimeService]
 })
 export class AppComponent implements OnInit {
   constructor(private languageService: LanguageService,
-              private dateTime: DateTimeService) {
+              private dateTime: DateTimeService,
+              public loadingService: LoadingService) {
   }
 
   ngOnInit() {

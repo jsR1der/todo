@@ -1,5 +1,6 @@
 import {
   HttpException,
+  HttpStatus,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -24,22 +25,25 @@ export class AuthService {
   public async signUp(name: string, pass: string): Promise<SignUpInResponse> {
     const userExist = await this.userService.findOne('name', name);
     if (userExist) {
-      throw new Error(`User with name ${name} already exist`);
+      throw new HttpException(
+        `User with name ${name} already exist`,
+        HttpStatus.BAD_REQUEST,
+      );
     }
     const user = await this.userService.create({ name, pass });
     const token = await this.createToken(user.id, user.name);
-    const { pass, ...userWithoutPass } = user;
+    const { pass: password, ...userWithoutPass } = user;
     return { token, user: userWithoutPass };
   }
 
   public async signIn(name: string, pass: string): Promise<SignUpInResponse> {
     const user = await this.validateUser(name, pass);
     const token = await this.createToken(user.id, user.name);
-    const { pass, ...userWithoutPass } = user;
+    const { pass: password, ...userWithoutPass } = user;
     return { token, user: userWithoutPass };
   }
 
-  public isTokenValid(token: string): boolean {
+  public isTokenInBlackList(token: string): boolean {
     if (this.tokenBlackList.has(token) || !token) {
       throw new UnauthorizedException();
     }
@@ -57,7 +61,10 @@ export class AuthService {
   public async validateUser(name: string, pass: string): Promise<User> {
     const user = await this.userService.findOne('name', name);
     if (!user) {
-      throw new Error(`User with name ${name} was not found.`);
+      throw new HttpException(
+        `User with name ${name} does not exist`,
+        HttpStatus.BAD_REQUEST,
+      );
     }
     const valid = await bcrypt.compare(pass, user.pass);
     if (!valid) {
@@ -75,7 +82,6 @@ export class AuthService {
     const token = this.extractTokenFromHeader(req);
     const decoded = this.jwtService.decode(token);
     this.tokenBlackList.add(token);
-    // await this.userService.update(decoded.sub, { refresh_token: null });
     return `User with id ${decoded.sub} was logged out`;
   }
 }

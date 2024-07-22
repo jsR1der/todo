@@ -22,12 +22,4 @@ export class InputService {
     config.inputRef = inputRef.nativeElement;
   }
 
-  public mapError<T>(control: FormControl<T>): void {
-    const errors: string[] = [];
-    for (const i in control.errors) {
-      errors.push(control.errors[i])
-    }
-    this.errorMessages = errors;
-  }
-
 }

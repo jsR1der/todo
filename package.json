@@ -23,6 +23,7 @@
     "@angular/router": "^17.3.0",
     "@auth0/angular-jwt": "^5.2.0",
     "@ngrx/store": "^17.2.0",
+    "lodash": "^4.17.21",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.3"
@@ -40,6 +41,7 @@
     "@ngrx/eslint-plugin": "^17.2.0",
     "@playwright/test": "^1.44.1",
     "@types/jasmine": "~5.1.0",
+    "@types/lodash": "^4.17.7",
     "@types/node": "^20.14.4",
     "@typescript-eslint/eslint-plugin": "7.11.0",
     "@typescript-eslint/parser": "7.11.0",

@@ -1,5 +1,5 @@
-<div class="app-input width-full" [ngStyle]="config?.styles?.container || {}">
-  <mat-form-field appearance="fill">
+<div class="app-input w-full" [ngStyle]="config?.styles?.container || {}">
+  <mat-form-field class="w-full" appearance="fill">
     <mat-label>{{config.placeholder ? config.placeholder : 'Enter text...'}}</mat-label>
     <input [formControl]="config.control" #input [type]="config.type" matInput
            [ngStyle]="config?.styles?.input || {}">

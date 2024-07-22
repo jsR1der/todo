@@ -1,3 +1,3 @@
-<button mat-flat-button [color]="color" [type]="type">
+<button mat-flat-button [color]="color ? color : 'primary'" [type]="type ? type : 'button'">
   <ng-content></ng-content>
 </button>

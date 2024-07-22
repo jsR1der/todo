@@ -46,7 +46,9 @@ export class AuthComponent implements OnInit {
 
   public signUp(): void {
     if (this.authService.form.valid) {
-      this.authHttp.signUp(this.authService.form.value as SignUpPayload).subscribe(console.log)
+      this.authHttp.signUp(this.authService.form.value as SignUpPayload).subscribe(() => {
+        this.router.navigate(["/"]).then();
+      })
     }
     //   redirect to main page
   }

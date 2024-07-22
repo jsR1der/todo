@@ -8,7 +8,8 @@ import {provideNativeDateAdapter} from "@angular/material/core";
 import {provideHttpClient, withInterceptors} from "@angular/common/http";
 import {authInterceptor} from "./interceptors/auth/auth.interceptor";
 import {errorInterceptor} from "./interceptors/error/error.interceptor";
+import {loadingInterceptor} from "./interceptors/loading/loading.interceptor";
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideRouter(routes), provideAnimationsAsync(), provideStore(), provideNativeDateAdapter(), provideHttpClient(withInterceptors([authInterceptor, errorInterceptor]))]
+  providers: [provideRouter(routes), provideAnimationsAsync(), provideStore(), provideNativeDateAdapter(), provideHttpClient(withInterceptors([loadingInterceptor, authInterceptor, errorInterceptor]))]
 };
