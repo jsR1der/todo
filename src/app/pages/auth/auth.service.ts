@@ -7,7 +7,7 @@ import {FormGroup, NonNullableFormBuilder, Validators} from "@angular/forms";
 export class AuthService {
   public readonly form = new FormGroup({
     name: this.fb.control('', [Validators.required]),
-    pass: this.fb.control('', [Validators.required,Validators.minLength(5)])
+    pass: this.fb.control('', [Validators.required, Validators.minLength(5)])
   }, {updateOn: 'blur'})
 
   get controls() {

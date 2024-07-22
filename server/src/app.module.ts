@@ -7,6 +7,8 @@ import { UsersModule } from './routes/users/users.module';
 import { DataSource } from 'typeorm';
 import { User } from './routes/users/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { TodosModule } from './routes/todos/todos.module';
+import { Todo } from './routes/todos/entities/todo.entity';
 
 @Module({
   controllers: [AppController],
@@ -22,7 +24,7 @@ import { AuthModule } from './auth/auth.module';
         port: configService.get<number>('DBPORT'),
         password: configService.get<string>('PGPASSWORD'),
         username: configService.get<string>('PGUSER'),
-        entities: [User],
+        entities: [User, Todo],
         database: configService.get<string>('PGDATABASE'),
         synchronize: configService.get<boolean>('synchronize'),
         logging: configService.get<boolean>('logging'),
@@ -31,6 +33,7 @@ import { AuthModule } from './auth/auth.module';
     }),
     UsersModule,
     AuthModule,
+    TodosModule,
   ],
   providers: [AppService],
 })
