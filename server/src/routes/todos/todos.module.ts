@@ -8,9 +8,10 @@ import { User } from '../users/user.entity';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { AuthService } from '../../auth/auth.service';
+import { TodoList } from './entities/todo-list.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Todo, User])],
+  imports: [TypeOrmModule.forFeature([Todo, TodoList, User])],
   controllers: [TodosController],
   providers: [
     TodosService,

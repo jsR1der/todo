@@ -9,6 +9,7 @@ import { User } from './routes/users/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { TodosModule } from './routes/todos/todos.module';
 import { Todo } from './routes/todos/entities/todo.entity';
+import { TodoList } from './routes/todos/entities/todo-list.entity';
 
 @Module({
   controllers: [AppController],
@@ -24,7 +25,7 @@ import { Todo } from './routes/todos/entities/todo.entity';
         port: configService.get<number>('DBPORT'),
         password: configService.get<string>('PGPASSWORD'),
         username: configService.get<string>('PGUSER'),
-        entities: [User, Todo],
+        entities: [User, Todo, TodoList],
         database: configService.get<string>('PGDATABASE'),
         synchronize: configService.get<boolean>('synchronize'),
         logging: configService.get<boolean>('logging'),

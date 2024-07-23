@@ -14,4 +14,6 @@ export class Todo {
   date: string;
   @Column('boolean')
   iscompleted: boolean;
+  @Column({ type: 'integer' })
+  list_id: number;
 }

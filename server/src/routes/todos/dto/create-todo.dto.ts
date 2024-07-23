@@ -1,12 +1,17 @@
 import {
   IsArray,
+  IsBoolean,
   IsDate,
   IsNotEmpty,
+  IsNumber,
   IsOptional,
   IsString,
 } from 'class-validator';
 
 export class CreateTodoDto {
+  @IsOptional()
+  @IsNumber()
+  id?: number;
   @IsNotEmpty()
   @IsString()
   name: string;
@@ -19,4 +24,7 @@ export class CreateTodoDto {
   @IsOptional()
   @IsDate()
   date?: string;
+  @IsBoolean()
+  @IsOptional()
+  iscompleted: boolean = false;
 }
