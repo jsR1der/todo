@@ -1,8 +1,8 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity({ name: 'todos' })
 export class Todo {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number;
   @Column({ length: 50 })
   name: string;
@@ -12,7 +12,7 @@ export class Todo {
   tags: string[];
   @Column({ type: 'date', nullable: true })
   date: string;
-  @Column('boolean')
+  @Column({ type: 'boolean', default: false })
   iscompleted: boolean;
   @Column({ type: 'integer' })
   list_id: number;

@@ -14,7 +14,7 @@ export class TodosService {
     @InjectRepository(Todo)
     private readonly todoRepository: Repository<Todo>,
     @InjectRepository(TodoList)
-    private readonly todoListRepository: Repository<Todo>,
+    private readonly todoListRepository: Repository<TodoList>,
   ) {}
 
   public async create(createTodoDto: CreateTodoDto) {
@@ -32,7 +32,13 @@ export class TodosService {
   }
 
   public async getAllLists() {
-    return await this.todoListRepository.find();
+    const lists = await this.todoListRepository.find();
+
+    for (let i = 0; i < lists.length; i++) {
+      const list = lists[i];
+      lists[i].items = await this.todoRepository.findBy({ list_id: list.id });
+    }
+    return lists;
   }
 
   public async findOne(id: number) {

@@ -12,6 +12,8 @@ import {TailwindFontSizeEnum, TitleType} from "../../models/tailwind.model";
 import {TitleComponent} from "../../components/title/title.component";
 import {MainService} from "./main.service";
 import {ButtonConfig} from "../../components/icon-button/button.model";
+import {ActivatedRoute} from "@angular/router";
+import {ExpansionList} from "../../components/expansion-list/expansion-list.model";
 
 @Component({
   selector: 'app-main',
@@ -35,11 +37,12 @@ import {ButtonConfig} from "../../components/icon-button/button.model";
   providers: [MainService]
 })
 export class MainComponent implements OnInit {
+  public lists: ExpansionList[] = []
   public headerButtonConfig: ButtonConfig;
   protected readonly TailwindFontSizeEnum = TailwindFontSizeEnum;
   protected readonly HeaderType = TitleType;
 
-  constructor(private mainService: MainService) {
+  constructor(private mainService: MainService, private aRoute: ActivatedRoute) {
   }
 
   public action(): void {
@@ -47,6 +50,8 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.lists = this.aRoute.snapshot.data['data'];
+
     this.headerButtonConfig = this.mainService.buildButtonConfig({
       iconName: 'add',
       color: 'primary',

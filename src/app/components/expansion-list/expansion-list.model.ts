@@ -1,6 +1,8 @@
 export interface ExpansionList {
+  id: number;
   name: string;
-  todoList: TodoItem[];
+  user_id: number;
+  items: TodoItem[];
 }
 
 export interface TodoItem {

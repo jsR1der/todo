@@ -1,11 +1,11 @@
 <mat-accordion multi>
-  @for (item of items;track item.name) {
+  @for (list of lists;track list.name) {
 
     <mat-expansion-panel class="app-expansion-panel !m-0" expanded="false">
       <mat-expansion-panel-header expandedHeight="48px" class="app-expansion-header">
-        {{ item.name }}
+        {{ list.name }}
       </mat-expansion-panel-header>
-      @for(todo of item.todoList;track todo.title) {
+      @for(todo of list.items;track todo.title) {
         <app-todo [todo]="todo"></app-todo>
       }
     </mat-expansion-panel>

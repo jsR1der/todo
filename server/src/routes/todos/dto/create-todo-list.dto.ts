@@ -7,4 +7,7 @@ export class CreateTodoListDto {
   @IsNotEmpty()
   @IsString()
   name: string;
+  @IsNotEmpty()
+  @IsNumber()
+  user_id: number;
 }

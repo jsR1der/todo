@@ -1,9 +1,13 @@
-import { Column, Entity, PrimaryColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Todo } from './todo.entity';
 
 @Entity({ name: 'todo_lists' })
 export class TodoList {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn()
   id: number;
   @Column({ length: 50 })
   name: string;
+  @Column({ type: 'integer' })
+  user_id: number;
+  items?: Todo[] = [];
 }

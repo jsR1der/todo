@@ -27,4 +27,7 @@ export class CreateTodoDto {
   @IsBoolean()
   @IsOptional()
   iscompleted: boolean = false;
+  @IsNotEmpty()
+  @IsNumber()
+  list_id: number;
 }

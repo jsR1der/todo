@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {LanguageService} from "./services/language.service";
-import {DateTimeService} from "./services/date-time.service";
+import {LanguageService} from "./services/language/language.service";
+import {DateTimeService} from "./services/date-time/date-time.service";
 import {LoadingService} from "./interceptors/loading/loading.service";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {AsyncPipe} from "@angular/common";
@@ -17,11 +17,12 @@ import {AsyncPipe} from "@angular/common";
 export class AppComponent implements OnInit {
   constructor(private languageService: LanguageService,
               private dateTime: DateTimeService,
-              public loadingService: LoadingService) {
+              public loadingService: LoadingService,
+  ) {
   }
 
   ngOnInit() {
-    console.log(this.languageService.getUserLanguage())
-    console.log(this.dateTime.getUserTimeZone())
+    // console.log(this.languageService.getUserLanguage())
+    // console.log(this.dateTime.getUserTimeZone())
   }
 }

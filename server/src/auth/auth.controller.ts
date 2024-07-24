@@ -40,7 +40,6 @@ export class AuthController {
     return request['user'];
   }
 
-  @UseGuards(AuthGuard)
   @Get('signOut')
   public async logout(@Req() request: Request, @Res() res: Response) {
     const responseMessage = await this.authService.signOut(request);

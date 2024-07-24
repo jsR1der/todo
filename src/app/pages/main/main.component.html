@@ -17,7 +17,7 @@
       <app-title class="title" [config]="{title: 'header2',size: TailwindFontSizeEnum.base, type: HeaderType.Custom}"></app-title>
       <app-icon-button class="button" [config]="{iconName: 'add',color: 'primary',action: action.bind(this)}"></app-icon-button>
     </app-header>
-    <app-expansion-list></app-expansion-list>
+    <app-expansion-list [lists]="lists"></app-expansion-list>
   </main>
 
 </mat-drawer-container>
