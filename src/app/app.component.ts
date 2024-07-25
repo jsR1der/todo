@@ -4,12 +4,12 @@ import {LanguageService} from "./services/language/language.service";
 import {DateTimeService} from "./services/date-time/date-time.service";
 import {LoadingService} from "./interceptors/loading/loading.service";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
-import {AsyncPipe} from "@angular/common";
+import {AsyncPipe, NgIf} from "@angular/common";
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, MatProgressSpinner, AsyncPipe],
+  imports: [RouterOutlet, MatProgressSpinner, AsyncPipe, NgIf],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   providers: [LanguageService, DateTimeService]

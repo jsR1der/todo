@@ -1,7 +1,4 @@
-@if (loadingService.loadingSub | async) {
-  <mat-spinner diameter="75" class="app-spinner"></mat-spinner>
-} @else {
-  <router-outlet></router-outlet>
-}
+<mat-spinner *ngIf="loadingService.loadingSub | async" diameter="75" class="app-spinner"></mat-spinner>
+<router-outlet></router-outlet>
 
 

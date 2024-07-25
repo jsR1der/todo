@@ -1,7 +1,7 @@
 <section class="tags-container flex justify-start items-center gap-2">
-  @for (tag of tags; track tag) {
+  @for (tag of todo?.tags ? todo.tags : []; track tag) {
     <app-tag [tag]="tag"></app-tag>
   }
-  <app-input [config]="inputConfig"></app-input>
+  <app-input [config]="inputConfig" (inputInit)="onInputInit()"></app-input>
 </section>
 

@@ -1,19 +1,19 @@
 <mat-accordion multi>
-  @for (list of lists;track list.name) {
+    @for (list of lists; track list.id; let index = $index) {
 
-    <mat-expansion-panel class="app-expansion-panel !m-0" expanded="false">
+      <mat-expansion-panel class="app-expansion-panel !m-0" expanded="false">
+        <mat-expansion-panel-header expandedHeight="48px" class="app-expansion-header">
+          <app-input [config]="configs[index]" (inputInit)="onInputInit(index)"></app-input>
+        </mat-expansion-panel-header>
+        @for (todo of list.items; track todo.name) {
+          <app-todo [todo]="todo"></app-todo>
+        }
+      </mat-expansion-panel>
+    }
+    <mat-expansion-panel class="app-expansion-panel !m-0" expanded="true">
       <mat-expansion-panel-header expandedHeight="48px" class="app-expansion-header">
-        {{ list.name }}
+        New
       </mat-expansion-panel-header>
-      @for(todo of list.items;track todo.title) {
-        <app-todo [todo]="todo"></app-todo>
-      }
-    </mat-expansion-panel>
-  }
-  <mat-expansion-panel  class="app-expansion-panel !m-0" expanded="true">
-    <mat-expansion-panel-header expandedHeight="48px" class="app-expansion-header">
-      New
-    </mat-expansion-panel-header>
       <app-todo></app-todo>
-  </mat-expansion-panel>
+    </mat-expansion-panel>
 </mat-accordion>

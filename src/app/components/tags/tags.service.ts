@@ -11,15 +11,17 @@ export class TagsService {
   }
 
   public handleInputEvents(event: Event, callback: (value: string) => void): void {
+    if (this.tagControl.value) {
 
-    if (event instanceof KeyboardEvent && event.key === ' ') {
-      callback(this.tagControl.value)
-      this.tagControl.reset();
-    }
+      if (event instanceof KeyboardEvent && event.key === ' ') {
+        callback(this.tagControl.value)
+        this.tagControl.reset();
+      }
 
-    if (event instanceof FocusEvent) {
-      callback(this.tagControl.value);
-      this.tagControl.reset();
+      if (event instanceof FocusEvent) {
+        callback(this.tagControl.value);
+        this.tagControl.reset();
+      }
     }
 
   }

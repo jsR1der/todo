@@ -9,8 +9,9 @@ export interface TodoItem extends Todo {
   date: string;
   iscompleted: boolean;
   list_id: number;
-
 }
+
+
 
 export interface TodoList extends Todo {
   items: TodoItem[]

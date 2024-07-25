@@ -21,11 +21,12 @@ export class TodoHttpService {
   }
 
   public updateTodo(body: TodoItem): Observable<TodoItem> {
-    return this.httpClient.patch<TodoItem>(`${this.baseUrl}`, body);
+    return this.httpClient.patch<TodoItem>(`${this.baseUrl}/${body.id}`, body);
   }
 
-  public updateTodoList(body: TodoList): Observable<TodoList> {
-    return this.httpClient.patch<TodoList>(`${this.baseUrl}/list`, body);
+  public updateTodoList(body: TodoList): Observable<Omit<TodoList, 'items'>> {
+    const {items, ...payload} = body
+    return this.httpClient.patch<Omit<TodoList, 'items'>>(`${this.baseUrl}/list/${body.id}`, payload);
   }
 
   public deleteTodo(id: number): Observable<boolean> {
@@ -41,4 +42,4 @@ export class TodoHttpService {
   }
 
 
-} 
+}

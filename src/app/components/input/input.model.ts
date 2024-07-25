@@ -2,18 +2,20 @@ import {FormControl} from "@angular/forms";
 import {Observable} from "rxjs";
 
 export interface InputConfig<T> {
-  control: FormControl<T>;
-  inputEvents: OutputEventKey[];
-  styles: { container?: Record<string, string>, input?: Record<string, string> }
-  placeholder?: string;
+  isMaterial: boolean;
   type: string;
   inputRef: HTMLInputElement | null;
+  styles: { container?: Record<string, string>, input?: Record<string, string> }
+  control: FormControl<T>;
+  inputEvents: OutputEventKey[];
   outputEvents: Record<OutputEventKey, Observable<Event>>;
+  placeholder?: string;
 }
 
 export type OutputEventKey = 'keydown' | 'input' | 'focusout'
 
 export class InputConfigBuilder<T> implements InputConfig<T> {
+  public isMaterial: boolean = true;
   public type = "text";
   public inputRef = null;
   public styles: { container?: Record<string, string>, input?: Record<string, string> } = {};
@@ -24,7 +26,6 @@ export class InputConfigBuilder<T> implements InputConfig<T> {
 
   public addStyles(styles: { container?: Record<string, string>, input?: Record<string, string> }): this {
     this.styles = styles;
-    console.log(this.styles)
     return this;
   }
 
@@ -45,8 +46,13 @@ export class InputConfigBuilder<T> implements InputConfig<T> {
   }
 
   public setType(type: string): this {
-     this.type = type;
-     return this;
+    this.type = type;
+    return this;
+  }
+
+  public setMaterial(type: boolean): this {
+    this.isMaterial = type;
+    return this;
   }
 
 

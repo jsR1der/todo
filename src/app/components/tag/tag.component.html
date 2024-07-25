@@ -1,3 +1,14 @@
-<div>
-  {{tagPrefix+tag}}
+<div (click)="selectTag(tag)">
+  {{ tagPrefix + tag }}
 </div>
+
+
+<ng-template #readOnly>
+  <div (click)="selectTag(tag)">
+    {{ tagPrefix + tag }}
+  </div>
+</ng-template>
+
+<ng-template #edit>
+  <app-input [config]="tagInputConfig" (inputInit)="onInputInit()"></app-input>
+</ng-template>

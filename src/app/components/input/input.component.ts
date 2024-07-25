@@ -2,7 +2,7 @@ import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, ViewC
 import {ReactiveFormsModule} from "@angular/forms";
 import {InputConfig} from "./input.model";
 import {InputService} from "./input.service";
-import {NgClass, NgStyle} from "@angular/common";
+import {NgClass, NgStyle, NgTemplateOutlet} from "@angular/common";
 import {MatError, MatFormField, MatLabel} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
@@ -20,7 +20,8 @@ import {ErrorConverterPipe} from "./error-converter.pipe";
     MatLabel,
     MatInput,
     MatError,
-    ErrorConverterPipe
+    ErrorConverterPipe,
+    NgTemplateOutlet
   ],
   templateUrl: './input.component.html',
   styleUrl: './input.component.scss',
@@ -29,7 +30,7 @@ import {ErrorConverterPipe} from "./error-converter.pipe";
 export class InputComponent<T> implements AfterViewInit {
   @ViewChild('input') inputRef: ElementRef<HTMLInputElement>;
   @Input({required: true}) config: InputConfig<T>;
-  @Output() afterConfiguration = new EventEmitter<void>();
+  @Output() inputInit = new EventEmitter<void>();
 
   constructor(private inputService: InputService) {
   }
@@ -38,7 +39,7 @@ export class InputComponent<T> implements AfterViewInit {
   ngAfterViewInit(): void {
     this.inputService.setInputRef(this.inputRef, this.config);
     this.inputService.setEvents(this.config);
-    this.afterConfiguration.emit();
+    this.inputInit.emit();
   }
 
 }

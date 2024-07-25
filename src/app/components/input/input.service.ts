@@ -1,7 +1,6 @@
 import {ElementRef, Injectable} from '@angular/core';
 import {fromEvent} from "rxjs";
 import {InputConfig, OutputEventKey} from "./input.model";
-import {FormControl} from "@angular/forms";
 
 @Injectable()
 export class InputService {

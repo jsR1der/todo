@@ -13,7 +13,7 @@ import {TitleComponent} from "../../components/title/title.component";
 import {MainService} from "./main.service";
 import {ButtonConfig} from "../../components/icon-button/button.model";
 import {ActivatedRoute} from "@angular/router";
-import {ExpansionList} from "../../components/expansion-list/expansion-list.model";
+import {TodoList} from "../../services/todo/todo.model";
 
 @Component({
   selector: 'app-main',
@@ -37,7 +37,7 @@ import {ExpansionList} from "../../components/expansion-list/expansion-list.mode
   providers: [MainService]
 })
 export class MainComponent implements OnInit {
-  public lists: ExpansionList[] = []
+  public lists: TodoList[] = []
   public headerButtonConfig: ButtonConfig;
   protected readonly TailwindFontSizeEnum = TailwindFontSizeEnum;
   protected readonly HeaderType = TitleType;
@@ -50,13 +50,22 @@ export class MainComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.lists = this.aRoute.snapshot.data['data'];
+    this.lists = this.getLists()
 
     this.headerButtonConfig = this.mainService.buildButtonConfig({
       iconName: 'add',
       color: 'primary',
       action: this.action.bind(this)
     })
+  }
+
+
+  private getLists(): TodoList[] {
+    const lists = this.aRoute.snapshot.data['data'];
+    if (!lists) {
+      return [];
+    }
+    return lists;
   }
 
 

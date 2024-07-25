@@ -1,6 +1,15 @@
 <div class="app-input w-full" [ngStyle]="config?.styles?.container || {}">
+  @if (config?.isMaterial) {
+    <ng-container [ngTemplateOutlet]="material"></ng-container>
+  } @else {
+    <ng-container [ngTemplateOutlet]="native"></ng-container>
+  }
+</div>
+
+
+<ng-template #material>
   <mat-form-field class="w-full" appearance="fill">
-    <mat-label>{{config.placeholder ? config.placeholder : 'Enter text...'}}</mat-label>
+    <mat-label>{{ config.placeholder ? config.placeholder : 'Enter text...' }}</mat-label>
     <input [formControl]="config.control" #input [type]="config.type" matInput
            [ngStyle]="config?.styles?.input || {}">
     <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
@@ -8,4 +17,10 @@
       <mat-error>{{ e }}</mat-error>
     }
   </mat-form-field>
-</div>
+</ng-template>
+
+<ng-template #native>
+  <input [formControl]="config.control" #input [type]="config.type"
+         [placeholder]="config.placeholder ? config.placeholder : 'Enter text...'"
+         [ngStyle]="config?.styles?.input || {}">
+</ng-template>

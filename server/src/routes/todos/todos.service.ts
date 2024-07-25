@@ -32,11 +32,18 @@ export class TodosService {
   }
 
   public async getAllLists() {
-    const lists = await this.todoListRepository.find();
+    const lists = await this.todoListRepository.find({
+      order: {
+        id: 'ASC',
+      },
+    });
 
     for (let i = 0; i < lists.length; i++) {
       const list = lists[i];
-      lists[i].items = await this.todoRepository.findBy({ list_id: list.id });
+      lists[i].items = await this.todoRepository.find({
+        where: { list_id: list.id },
+        order: { id: 'ASC' },
+      });
     }
     return lists;
   }
