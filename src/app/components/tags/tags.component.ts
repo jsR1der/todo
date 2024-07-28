@@ -6,8 +6,6 @@ import {MatIcon} from "@angular/material/icon";
 import {COMMA, ENTER} from "@angular/cdk/keycodes";
 import {LiveAnnouncer} from "@angular/cdk/a11y";
 import {TodoHttpService} from "../../services/todo/todo-http.service";
-import {UpdateTodoAdapter} from "../todo/todo.model";
-import {catchError, finalize, of} from "rxjs";
 import {TodoService} from "../todo/todo.service";
 
 @Component({
@@ -73,18 +71,18 @@ export class TagsComponent {
 
   public updateTags() {
     if (this.todo.id) {
-
-      this.todoService.isLoading.next(true);
-      this.todoHttpService.updateTodo(
-        new UpdateTodoAdapter(this.todo, {} as Partial<TodoItem>).output,
-      ).pipe(
-        catchError(e => {
-          // show snackbar
-          return of(e)
-        }),
-        finalize(() => this.todoService.isLoading.next(false))).subscribe(() => {
-        console.log(`tags has been updated`)
-      })
+      this.todoService.controls.tags.setValue(this.todo.tags);
+      //   this.todoService.isLoading.next(true);
+      //   this.todoHttpService.updateTodo(
+      //     new UpdateTodoAdapter(this.todo, {} as Partial<TodoItem>).output,
+      //   ).pipe(
+      //     catchError(e => {
+      //       // show snackbar
+      //       return of(e)
+      //     }),
+      //     finalize(() => this.todoService.isLoading.next(false))).subscribe(() => {
+      //     console.log(`tags has been updated`)
+      //   })
     }
   }
 

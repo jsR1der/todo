@@ -13,9 +13,10 @@ import {InputConfig, InputConfigBuilder} from "../input/input.model";
 import {TodoHttpService} from "../../services/todo/todo-http.service";
 import {InputComponent} from "../input/input.component";
 import {debounceTime, Subject, takeUntil} from "rxjs";
-import {TodoList} from "../../services/todo/todo.model";
+import {TodoItem, TodoList} from "../../services/todo/todo.model";
 import {AsyncPipe, NgIf} from "@angular/common";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {list} from "postcss";
 
 @Component({
   selector: 'app-expansion-list',
@@ -74,5 +75,14 @@ export class ExpansionListComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.unsubscribeAll$.next()
     this.unsubscribeAll$.complete()
+  }
+
+  public addEmptyTodo(newTodo: TodoItem, index: number) {
+    this.lists[index].items[this.lists[index].items.length-1] = newTodo;
+  }
+
+  public completeTodo(todoIndex: number,listIndex: number) {
+    // refactor later
+    this.lists[listIndex].items = this.lists[listIndex].items.filter((item,index) => index !== todoIndex);
   }
 }

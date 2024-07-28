@@ -16,6 +16,7 @@ export class TodoItem implements Todo {
 
 
 export interface TodoList extends Todo {
+  id: number;
   items: TodoItem[]
   userId: number;
 }

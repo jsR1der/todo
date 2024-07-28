@@ -41,7 +41,7 @@ export class TodosService {
     for (let i = 0; i < lists.length; i++) {
       const list = lists[i];
       lists[i].items = await this.todoRepository.find({
-        where: { list_id: list.id },
+        where: { list_id: list.id, iscompleted: false },
         order: { id: 'ASC' },
       });
     }

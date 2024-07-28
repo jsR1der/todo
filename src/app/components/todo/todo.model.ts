@@ -10,5 +10,6 @@ export class UpdateTodoAdapter {
     this.output = {...old,...update};
     this.output.date = update.date ? update.date : null;
     this.output.description = update.description ? update.description : null;
+    this.output.list_id = old.list_id;
   }
 }
