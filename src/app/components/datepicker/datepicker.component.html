@@ -13,8 +13,8 @@
 
 <div class="app-form-control-wrapper flex start items-center gap-4">
 <!--  <mat-datepicker-toggle [for]="datepicker"></mat-datepicker-toggle>-->
-  <mat-icon (click)="datepicker.open()">home</mat-icon>
-  <input placeholder="date format by user locale" matInput [matDatepicker]="datepicker">
+  <mat-icon (click)="datepicker.open()">calendar_month</mat-icon>
+  <input placeholder="date format by user locale" matInput [hidden]="true" (dateChange)="onDateChange($event)" [matDatepicker]="datepicker">
   <!--  <mat-hint>MM/DD/YYYY</mat-hint>-->
   <mat-datepicker #datepicker>
     <mat-datepicker-actions>

@@ -29,8 +29,8 @@ export class InputConfigBuilder<T> implements InputConfig<T> {
     return this;
   }
 
-  public setControl(control: FormControl<T>): this {
-    this.control = control;
+  public setControl(control: FormControl<unknown>): this {
+    this.control = control as FormControl<T>;
     return this;
   }
 

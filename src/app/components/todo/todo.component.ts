@@ -1,15 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {AsyncPipe, JsonPipe, NgIf} from "@angular/common";
 import {DatepickerComponent} from "../datepicker/datepicker.component";
 import {TagsComponent} from "../tags/tags.component";
 import {InputComponent} from "../input/input.component";
 import {TodoService} from "./todo.service";
-import {MatCheckbox, MatCheckboxChange} from "@angular/material/checkbox";
+import {MatCheckbox} from "@angular/material/checkbox";
 import {InputConfig, InputConfigBuilder} from "../input/input.model";
 import {TodoItem} from "../../services/todo/todo.model";
 import {TodoHttpService} from "../../services/todo/todo-http.service";
-import {finalize} from "rxjs";
+import {catchError, debounceTime, finalize, merge, of, Subject, takeUntil} from "rxjs";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
+import {ReactiveFormsModule} from "@angular/forms";
+import {UpdateTodoAdapter} from "./todo.model";
 
 @Component({
   selector: 'app-todo',
@@ -22,42 +24,73 @@ import {MatProgressSpinner} from "@angular/material/progress-spinner";
     MatCheckbox,
     NgIf,
     MatProgressSpinner,
-    AsyncPipe
+    AsyncPipe,
+    ReactiveFormsModule
   ],
   templateUrl: './todo.component.html',
   styleUrl: './todo.component.scss',
   providers: [TodoService]
 })
-export class TodoComponent implements OnInit {
-  @Input() todo: TodoItem = {} as TodoItem;
-  public inputConfig: InputConfig<string>
+export class TodoComponent implements OnInit, OnDestroy {
+  @Input() todo: TodoItem = new TodoItem()
 
-  constructor(public todoService: TodoService,
+  private readonly unsubscribeAll$ = new Subject<void>()
+
+  public descriptionInputConfig: InputConfig<string>;
+  public nameInputConfig: InputConfig<string>;
+  public tagsInputConfig: InputConfig<string[]>;
+  public dateInputConfig: InputConfig<string>;
+
+  constructor(public readonly todoService: TodoService,
               private readonly todoHttpService: TodoHttpService) {
   }
 
   ngOnInit() {
-    this.todoService.setTodoDescriptionControl(this.todo?.description);
-    this.inputConfig = new InputConfigBuilder<string>().setControl(this.todoService.todoDescriptionControl).addEvents(['focusout']).addPlaceholder("Enter description").setMaterial(false)
-  }
+    this.todoService.controls.name.setValue(this.todo?.name || '');
+    this.todoService.controls.tags.setValue(this.todo?.tags || []);
+    this.todoService.controls.description.setValue(this.todo?.description || '');
+    this.todoService.controls.date.setValue(this.todo?.date || '');
+    this.nameInputConfig = new InputConfigBuilder<string>().setControl(this.todoService.controls.name).addPlaceholder("Enter name").setMaterial(false)
+    this.descriptionInputConfig = new InputConfigBuilder<string>().setControl(this.todoService.controls.description).addPlaceholder("Enter description").setMaterial(false)
+    this.tagsInputConfig = new InputConfigBuilder<string[]>().setControl(this.todoService.controls.tags).addEvents(['focusout', 'keydown']).addPlaceholder("Enter tag").setMaterial(false)
+    this.dateInputConfig = new InputConfigBuilder<string>().setControl(this.todoService.controls.date).addPlaceholder("Enter date").setMaterial(false)
 
-  public onInputInit(): void {
-    this.inputConfig.outputEvents['focusout'].subscribe()
-  }
 
-  public onCheckboxChange(change: MatCheckboxChange): void {
-    this.todoService.isLoading.next(true);
-    this.todoHttpService.updateTodo({
-      ...this.todo,
-      iscompleted: change.checked
-    }).pipe(
-      finalize(() => this.todoService.isLoading.next(false))).subscribe(() => {
-      this.todo.iscompleted = change.checked;
+    this.todoService.form.valueChanges.pipe(takeUntil(this.unsubscribeAll$), debounceTime(750)).subscribe(update => {
+      this.todoService.isLoading.next(true);
+      this.todoHttpService.updateTodo(
+        new UpdateTodoAdapter(this.todo, update as Partial<TodoItem>).output,
+      ).pipe(
+        catchError(e => {
+          // show snackbar
+          return of(e)
+        }),
+        finalize(() => this.todoService.isLoading.next(false))).subscribe(() => {
+        this.todo = {...this.todo, ...update as Partial<TodoItem>}
+      })
     })
-
   }
 
-  public cancelClickOnLoading($event: MouseEvent) {
-    $event.stopImmediatePropagation();
+
+  public onTagsInputInit(): void {
+    const {keydown, focusout} = this.tagsInputConfig.outputEvents;
+    merge(keydown, focusout).pipe(takeUntil(this.unsubscribeAll$)).subscribe((e) => {
+      this.todoService.handleInputEvents(e, this.tagsInputConfig.control, this.updateTags.bind(this))
+    })
   }
+
+  private updateTags(): void {
+    window.document.body.click()
+  }
+
+  public onDateChange(isoString: string): void {
+    this.todoService.controls.date.setValue(isoString)
+  }
+
+
+  ngOnDestroy() {
+    this.unsubscribeAll$.next()
+    this.unsubscribeAll$.complete()
+  }
+
 }

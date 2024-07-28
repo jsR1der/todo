@@ -1,64 +1,91 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import {TagComponent} from "../tag/tag.component";
-import {NgTemplateOutlet} from "@angular/common";
-import {InputComponent} from "../input/input.component";
-import {TagsService} from "./tags.service";
-import {InputConfig, InputConfigBuilder} from "../input/input.model";
-import {catchError, filter, finalize, merge, of, Subject, takeUntil} from "rxjs";
-import {TodoHttpService} from "../../services/todo/todo-http.service";
+import {Component, inject, Input} from "@angular/core";
 import {TodoItem} from "../../services/todo/todo.model";
+import {MatChipEditedEvent, MatChipInputEvent, MatChipsModule} from "@angular/material/chips";
+import {MatFormField, MatLabel} from "@angular/material/form-field";
+import {MatIcon} from "@angular/material/icon";
+import {COMMA, ENTER} from "@angular/cdk/keycodes";
+import {LiveAnnouncer} from "@angular/cdk/a11y";
+import {TodoHttpService} from "../../services/todo/todo-http.service";
+import {UpdateTodoAdapter} from "../todo/todo.model";
+import {catchError, finalize, of} from "rxjs";
 import {TodoService} from "../todo/todo.service";
 
 @Component({
   selector: 'app-tags',
   standalone: true,
   imports: [
-    TagComponent,
-    NgTemplateOutlet,
-    InputComponent
+    MatFormField,
+    MatLabel,
+    MatChipsModule,
+    MatIcon,
   ],
   templateUrl: './tags.component.html',
   styleUrl: './tags.component.scss',
 })
-export class TagsComponent implements OnInit, OnDestroy {
-  @Input({required: true}) todo: TodoItem;
-  public inputConfig: InputConfig<string>;
+export class TagsComponent {
+  @Input() todo: TodoItem;
+  public addOnBlur = true;
+  public announcer = inject(LiveAnnouncer);
+  public readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
-  public unsubAll$ = new Subject<void>()
-
-  constructor(
-    public tagsService: TagsService,
-    public todoService: TodoService,
-    public todoHttpService: TodoHttpService) {
-  }
-
-  ngOnInit() {
-    this.inputConfig = new InputConfigBuilder<string>().setControl(this.tagsService.tagControl).addEvents(['keydown', 'focusout']).addPlaceholder("New tag").setMaterial(false)
+  constructor(private readonly todoHttpService: TodoHttpService, private readonly todoService: TodoService) {
   }
 
 
-  private pushNewTag(tagName: string): void {
-    this.todoService.isLoading.next(true)
-    this.todoHttpService.updateTodo({
-      ...this.todo,
-      tags: this.todo.tags.length ? [...this.todo.tags, tagName] : [tagName]
-    }).pipe(finalize(() => this.todoService.isLoading.next(false)), catchError(e => {
-      this.todoService.isLoading.next(false);
-      //   show snackbar
-      return of(e)
-    })).subscribe(() => {
-      this.todo.tags.push(tagName)
-    })
+  public add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    if (value) {
+      this.todo.tags.push(value);
+    }
+
+
+    event.chipInput!.clear();
   }
 
-  ngOnDestroy() {
-    this.unsubAll$.next();
-    this.unsubAll$.complete()
+  public remove(tag: string): void {
+    const index = this.todo.tags.indexOf(tag);
+
+    if (index >= 0) {
+      this.todo.tags.splice(index, 1);
+
+      this.announcer.announce(`Removed ${tag}`);
+    }
   }
 
-  public onInputInit() {
-    // todo prevent copypaste
-    const {keydown, focusout} = this.inputConfig.outputEvents;
-    merge(keydown, focusout).pipe(takeUntil(this.unsubAll$), filter(Boolean)).subscribe(e => this.tagsService.handleInputEvents(e, this.pushNewTag.bind(this)))
+  public edit(fruit: string, event: MatChipEditedEvent) {
+    const value = event.value.trim();
+
+    // Remove fruit if it no longer has a name
+    if (!value) {
+      this.remove(fruit);
+      this.updateTags()
+      return;
+    }
+
+    // Edit existing fruit
+    const index = this.todo.tags.indexOf(fruit);
+    if (index >= 0) {
+      this.todo.tags[index] = value;
+    }
+    this.updateTags()
   }
+
+  public updateTags() {
+    if (this.todo.id) {
+
+      this.todoService.isLoading.next(true);
+      this.todoHttpService.updateTodo(
+        new UpdateTodoAdapter(this.todo, {} as Partial<TodoItem>).output,
+      ).pipe(
+        catchError(e => {
+          // show snackbar
+          return of(e)
+        }),
+        finalize(() => this.todoService.isLoading.next(false))).subscribe(() => {
+        console.log(`tags has been updated`)
+      })
+    }
+  }
+
 }

@@ -1,13 +1,12 @@
 <div class="border-[1px] border-black rounded-xl p-4 relative" [class.loading-overlay]="todoService.isLoading | async">
   <!--  make directive for spinner-->
   <mat-spinner *ngIf="todoService.isLoading | async" diameter="50" class="feature-spinner"></mat-spinner>
-  <mat-checkbox [checked]="todo?.iscompleted" (change)="onCheckboxChange($event)"></mat-checkbox>
+  <mat-checkbox [checked]="todo.iscompleted" [formControl]="todoService.controls.iscompleted"></mat-checkbox>
   <!--todo focus out event for input-->
   <app-input
-    *ngIf="!todo?.id"
-    (inputInit)="onInputInit()"
-    [config]="inputConfig"></app-input>
-  <div *ngIf="todo?.id">{{ todoService.todoDescriptionControl.value }}</div>
-  <app-tags [todo]="todo"></app-tags>
-  <app-datepicker></app-datepicker>
+    [config]="nameInputConfig"></app-input>
+  <app-input
+    [config]="descriptionInputConfig"></app-input>
+  <app-tags  [todo]="todo" ></app-tags>
+  <app-datepicker (dateChange)="onDateChange($event)" [config]="dateInputConfig"></app-datepicker>
 </div>

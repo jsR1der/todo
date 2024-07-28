@@ -1,7 +1,6 @@
 import {
   IsArray,
   IsBoolean,
-  IsDate,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -22,10 +21,10 @@ export class CreateTodoDto {
   @IsArray()
   tags?: string[] = [];
   @IsOptional()
-  @IsDate()
+  @IsString()
   date?: string;
-  @IsBoolean()
   @IsOptional()
+  @IsBoolean()
   iscompleted: boolean = false;
   @IsNotEmpty()
   @IsNumber()
