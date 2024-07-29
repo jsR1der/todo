@@ -16,7 +16,8 @@ import {debounceTime, Subject, takeUntil} from "rxjs";
 import {TodoItem, TodoList} from "../../services/todo/todo.model";
 import {AsyncPipe, NgIf} from "@angular/common";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
-import {list} from "postcss";
+import {MainService} from "../../pages/main/main.service";
+import {NonNullableFormBuilder, Validators} from "@angular/forms";
 
 @Component({
   selector: 'app-expansion-list',
@@ -44,19 +45,27 @@ export class ExpansionListComponent implements OnInit, OnDestroy {
   public configs: InputConfig<string>[] = []
   public unsubscribeAll$ = new Subject<void>();
 
-  constructor(public readonly expansionListService: ExpansionListService, private readonly todoHttpService: TodoHttpService) {
+  constructor(public readonly expansionListService: ExpansionListService, private readonly todoHttpService: TodoHttpService, private readonly mainService: MainService, private fb: NonNullableFormBuilder) {
   }
+
 
   ngOnInit() {
     this.createConfigs();
+    this.mainService.onListCreate.pipe(takeUntil(this.unsubscribeAll$)).subscribe(newTodoList => {
+      this.configs.push(this.configureConfig(newTodoList))
+    })
   }
 
   private createConfigs(): void {
     this.configs = this.lists.map((list) => {
-      this.expansionListService.control.setValue(list.name)
-      return new InputConfigBuilder<string>().setControl(this.expansionListService.control).addEvents(['focusout']).addPlaceholder("Enter description").setMaterial(false)
+      return this.configureConfig(list);
     })
   }
+
+  private configureConfig(list: TodoList): InputConfig<string> {
+    return new InputConfigBuilder<string>().setControl(this.fb.control(list.name, Validators.required)).addEvents(['focusout']).addPlaceholder("Enter description").setMaterial(false)
+  }
+
 
   public onInputInit(index: number): void {
     const control = this.configs[index].control;
@@ -64,9 +73,14 @@ export class ExpansionListComponent implements OnInit, OnDestroy {
       if (!control.value) {
         control.setValue(this.lists[index].name);
       } else {
-        this.todoHttpService.updateTodoList({...this.lists[index], name: control.value}).subscribe(() => {
-          this.lists[index] = {...this.lists[index], name: control.value}
-        })
+        if (control.valid) {
+
+          this.todoHttpService.updateTodoList({...this.lists[index], name: control.value}).subscribe(() => {
+            this.lists[index] = {...this.lists[index], name: control.value}
+          })
+        } else {
+          console.log('please validate input')
+        }
       }
 
     })
@@ -78,11 +92,16 @@ export class ExpansionListComponent implements OnInit, OnDestroy {
   }
 
   public addEmptyTodo(newTodo: TodoItem, index: number) {
-    this.lists[index].items[this.lists[index].items.length-1] = newTodo;
+    if (this.lists[index].items.length) {
+
+      this.lists[index].items[this.lists[index].items.length - 1] = newTodo;
+    } else {
+      this.lists[index].items = [newTodo]
+    }
   }
 
-  public completeTodo(todoIndex: number,listIndex: number) {
+  public completeTodo(todoIndex: number, listIndex: number) {
     // refactor later
-    this.lists[listIndex].items = this.lists[listIndex].items.filter((item,index) => index !== todoIndex);
+    this.lists[listIndex].items = this.lists[listIndex].items.filter((item, index) => index !== todoIndex);
   }
 }

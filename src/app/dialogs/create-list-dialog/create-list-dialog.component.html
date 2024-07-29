@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>Error</h2>
+<mat-dialog-content>
+  <form>
+    <app-input [config]="nameInputConfig"></app-input>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <div class="flex justify-between items-center w-full">
+  <app-button mat-dialog-close>Close</app-button>
+  <app-button (click)="createList()">Submit</app-button>
+  </div>
+</mat-dialog-actions>

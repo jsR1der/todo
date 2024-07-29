@@ -14,6 +14,10 @@ import {MainService} from "./main.service";
 import {ButtonConfig} from "../../components/icon-button/button.model";
 import {ActivatedRoute} from "@angular/router";
 import {TodoList} from "../../services/todo/todo.model";
+import {MatDialog} from "@angular/material/dialog";
+import {CreateListDialogComponent} from "../../dialogs/create-list-dialog/create-list-dialog.component";
+import {filter} from "rxjs";
+import {TodoHttpService} from "../../services/todo/todo-http.service";
 
 @Component({
   selector: 'app-main',
@@ -42,11 +46,19 @@ export class MainComponent implements OnInit {
   protected readonly TailwindFontSizeEnum = TailwindFontSizeEnum;
   protected readonly HeaderType = TitleType;
 
-  constructor(private mainService: MainService, private aRoute: ActivatedRoute) {
+  constructor(private mainService: MainService, private aRoute: ActivatedRoute, private matDialog: MatDialog, private readonly todoHttpService: TodoHttpService) {
   }
 
-  public action(): void {
-    console.log(`click`)
+  public openCreteListDialog(): void {
+    this.matDialog.open(CreateListDialogComponent, {
+      width: '550px',
+      data: {}
+    }).afterClosed().pipe(filter(Boolean)).subscribe(newList => {
+      this.todoHttpService.createTodoList(newList).subscribe(newTodoList => {
+        this.mainService.onListCreate.next(newTodoList);
+        this.lists.push(newList);
+      })
+    })
   }
 
   ngOnInit() {
@@ -55,7 +67,7 @@ export class MainComponent implements OnInit {
     this.headerButtonConfig = this.mainService.buildButtonConfig({
       iconName: 'add',
       color: 'primary',
-      action: this.action.bind(this)
+      action: this.openCreteListDialog.bind(this)
     })
   }
 

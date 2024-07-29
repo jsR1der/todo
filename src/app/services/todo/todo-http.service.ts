@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {CreateTodo, Todo, TodoItem, TodoList} from "./todo.model";
+import {AuthHttpService} from "../../pages/auth/auth-http.service";
 
 @Injectable({
   providedIn: 'root'
@@ -9,15 +10,16 @@ import {CreateTodo, Todo, TodoItem, TodoList} from "./todo.model";
 export class TodoHttpService {
   private readonly baseUrl = 'http://localhost:3000/todos'
 
-  constructor(private readonly httpClient: HttpClient) {
+  constructor(private readonly httpClient: HttpClient, private readonly authHttpService: AuthHttpService) {
   }
 
   public createTodo(body: CreateTodo): Observable<TodoItem> {
     return this.httpClient.post<TodoItem>(`${this.baseUrl}`, body);
   }
 
-  public createTodoList(body: Omit<TodoList, 'items'>): Observable<Todo> {
-    return this.httpClient.post<Todo>(`${this.baseUrl}/list`, body);
+  public createTodoList(body: Omit<TodoList, 'items'>): Observable<TodoList> {
+    const user_id = this.authHttpService.user$.value?.id
+    return this.httpClient.post<TodoList>(`${this.baseUrl}/list`, {...body, user_id});
   }
 
   public updateTodo(body: TodoItem): Observable<TodoItem> {
