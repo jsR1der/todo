@@ -44,6 +44,9 @@ export class TodosService {
         where: { list_id: list.id, iscompleted: false },
         order: { id: 'ASC' },
       });
+      console.log(lists[i].items.length);
+
+      lists[i].count = lists[i].items.length || 0;
     }
     return lists;
   }

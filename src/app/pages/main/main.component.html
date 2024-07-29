@@ -6,18 +6,20 @@
     <app-user-info></app-user-info>
     <app-groups></app-groups>
     <app-header>
-      <app-title class="title" [config]="{title: 'header1',size: TailwindFontSizeEnum.xs, type: HeaderType.Custom}"></app-title>
-      <app-icon-button class="button" [config]="headerButtonConfig"></app-icon-button>
+      <app-title class="title"
+                 [config]="{title: 'My lists',size: TailwindFontSizeEnum.xs, type: HeaderType.Custom}"></app-title>
+      <div class="count">{{ lists?.length || 0 }}</div>
     </app-header>
-    <app-selection-list></app-selection-list>
+    <app-selection-list [lists]="lists"></app-selection-list>
   </mat-drawer>
   <main class="p-4">
     <app-toolbar></app-toolbar>
     <app-header>
-      <app-title class="title" [config]="{title: 'header2',size: TailwindFontSizeEnum.base, type: HeaderType.Custom}"></app-title>
-      <app-icon-button class="button" [config]="{iconName: 'add',color: 'primary',action: openCreteListDialog.bind(this)}"></app-icon-button>
+      <app-title class="title"
+                 [config]="{title: mainService.selectedList.name + ' todos',size: TailwindFontSizeEnum.base, type: HeaderType.Custom}"></app-title>
+      <div class="count">{{ mainService.selectedList?.count || 0 }}</div>
     </app-header>
-    <app-expansion-list [lists]="lists"></app-expansion-list>
+    <app-expansion-list></app-expansion-list>
   </main>
 
 </mat-drawer-container>

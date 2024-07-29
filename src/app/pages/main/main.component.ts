@@ -46,7 +46,7 @@ export class MainComponent implements OnInit {
   protected readonly TailwindFontSizeEnum = TailwindFontSizeEnum;
   protected readonly HeaderType = TitleType;
 
-  constructor(private mainService: MainService, private aRoute: ActivatedRoute, private matDialog: MatDialog, private readonly todoHttpService: TodoHttpService) {
+  constructor(public mainService: MainService, private aRoute: ActivatedRoute, private matDialog: MatDialog, private readonly todoHttpService: TodoHttpService) {
   }
 
   public openCreteListDialog(): void {
@@ -63,6 +63,10 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.lists = this.getLists()
+    if (this.lists?.length) {
+      this.mainService.selectList(this.lists[0]);
+    }
+
 
     this.headerButtonConfig = this.mainService.buildButtonConfig({
       iconName: 'add',

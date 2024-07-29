@@ -6,6 +6,7 @@ import {TodoList} from "../../services/todo/todo.model";
 @Injectable()
 export class MainService {
   public onListCreate = new Subject<TodoList>();
+  public selectedList: TodoList;
 
   constructor() {
   }
@@ -14,5 +15,9 @@ export class MainService {
     const director = new ButtonDirector();
     const builder = new ButtonConfigBuilder()
     return director.buildConfig(builder, data)
+  }
+
+  public selectList(list: TodoList): void {
+     this.selectedList = list;
   }
 }

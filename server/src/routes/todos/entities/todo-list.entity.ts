@@ -10,4 +10,5 @@ export class TodoList {
   @Column({ type: 'integer' })
   user_id: number;
   items?: Todo[] = [];
+  count?: number;
 }

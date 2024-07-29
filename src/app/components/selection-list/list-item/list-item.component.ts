@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {ListItem} from "../list.model";
+import {TodoList} from "../../../services/todo/todo.model";
 
 @Component({
   selector: 'app-selection-list-item',
@@ -9,6 +9,7 @@ import {ListItem} from "../list.model";
   styleUrl: './list-item.component.scss'
 })
 export class ListItemComponent {
-  @Input({required: true}) item: ListItem;
+  @Input({required: true}) item: TodoList;
+
 
 }

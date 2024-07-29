@@ -1,14 +1,4 @@
-<mat-accordion multi>
-  @for (list of lists; track list.id; let listIndex = $index; let last = $last) {
-
-    <mat-expansion-panel class="app-expansion-panel !m-0" [expanded]="last">
-      <mat-expansion-panel-header expandedHeight="48px" class="app-expansion-header">
-        <app-input [config]="configs[listIndex]" (inputInit)="onInputInit(listIndex)"></app-input>
-      </mat-expansion-panel-header>
-      @for (todo of list.items; track todo.name;let todoIndex = $index) {
-        <app-todo (onComplete)="completeTodo(todoIndex,listIndex)" [listId]="list.id" [todo]="todo"></app-todo>
-      }
-      <app-todo (onCreate)="addEmptyTodo($event,listIndex)" [listId]="list.id"></app-todo>
-    </mat-expansion-panel>
-  }
-</mat-accordion>
+    @for (todo of mainService.selectedList.items; track todo.name; let todoIndex = $index) {
+      <app-todo (onComplete)="completeTodo(todoIndex)" [listId]="mainService.selectedList.id" [todo]="todo"></app-todo>
+    }
+    <app-todo (onCreate)="addEmptyTodo($event)" [listId]="mainService.selectedList.id"></app-todo>

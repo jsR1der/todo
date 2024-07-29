@@ -1,5 +1,5 @@
 <ul class="app-selection-list flex flex-col gap-2">
-  @for (item of items; track item.name) {
-    <app-selection-list-item [item]="item"></app-selection-list-item>
+  @for (list of lists; track list.id) {
+    <app-selection-list-item (click)="mainService.selectList(list)" [item]="list"></app-selection-list-item>
   }
 </ul>

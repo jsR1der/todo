@@ -1,11 +1,24 @@
-<div class="border-[1px] border-black rounded-xl p-4 relative" [class.loading-overlay]="todoService.isLoading | async">
+<div class="relative" [class.loading-overlay]="todoService.isLoading | async">
   <!--  make directive for spinner-->
   <mat-spinner *ngIf="todoService.isLoading | async" diameter="50" class="feature-spinner"></mat-spinner>
-  <mat-checkbox [checked]="todo.iscompleted" [formControl]="todoService.controls.iscompleted"></mat-checkbox>
-  <app-input
-    [config]="nameInputConfig"></app-input>
-  <app-input
-    [config]="descriptionInputConfig"></app-input>
-  <app-tags [todo]="todo"></app-tags>
-  <app-datepicker (dateChange)="onDateChange($event)" [config]="dateInputConfig"></app-datepicker>
+  <mat-accordion multi>
+
+    <mat-expansion-panel class="app-expansion-panel !m-0" [expanded]="false">
+      <mat-expansion-panel-header expandedHeight="48px" class="app-expansion-header">
+        <app-input
+          [config]="nameInputConfig"></app-input>
+      </mat-expansion-panel-header>
+      <mat-checkbox [checked]="todo.iscompleted" [formControl]="todoService.controls.iscompleted"></mat-checkbox>
+      <app-input [config]="descriptionInputConfig"></app-input>
+      <app-tags [todo]="todo"></app-tags>
+      <app-datepicker (dateChange)="onDateChange($event)" [config]="dateInputConfig"></app-datepicker>
+      <!--    @for (todo of mainService.selectedList.items; track todo.name; let todoIndex = $index) {-->
+      <!--      <app-todo (onComplete)="completeTodo(todoIndex)" [listId]="mainService.selectedList.id" [todo]="todo"></app-todo>-->
+      <!--    }-->
+      <!--    <app-todo (onCreate)="addEmptyTodo($event)" [listId]="mainService.selectedList.id"></app-todo>-->
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>
+
+
+

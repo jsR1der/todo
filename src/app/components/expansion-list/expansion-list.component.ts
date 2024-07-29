@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewEncapsulation} from '@angular/core';
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -41,25 +41,22 @@ import {NonNullableFormBuilder, Validators} from "@angular/forms";
   encapsulation: ViewEncapsulation.None
 })
 export class ExpansionListComponent implements OnInit, OnDestroy {
-  @Input() lists: TodoList[];
-  public configs: InputConfig<string>[] = []
+  public config: InputConfig<string>;
   public unsubscribeAll$ = new Subject<void>();
 
-  constructor(public readonly expansionListService: ExpansionListService, private readonly todoHttpService: TodoHttpService, private readonly mainService: MainService, private fb: NonNullableFormBuilder) {
+  constructor(public readonly expansionListService: ExpansionListService, private readonly todoHttpService: TodoHttpService, public mainService: MainService, private fb: NonNullableFormBuilder) {
   }
 
 
   ngOnInit() {
-    this.createConfigs();
-    this.mainService.onListCreate.pipe(takeUntil(this.unsubscribeAll$)).subscribe(newTodoList => {
-      this.configs.push(this.configureConfig(newTodoList))
-    })
+    this.createConfig();
+    // this.mainService.onListCreate.pipe(takeUntil(this.unsubscribeAll$)).subscribe(newTodoList => {
+    //   this.config.push(this.configureConfig(newTodoList))
+    // })
   }
 
-  private createConfigs(): void {
-    this.configs = this.lists.map((list) => {
-      return this.configureConfig(list);
-    })
+  private createConfig(): void {
+    this.config = this.configureConfig(this.mainService.selectedList);
   }
 
   private configureConfig(list: TodoList): InputConfig<string> {
@@ -67,16 +64,16 @@ export class ExpansionListComponent implements OnInit, OnDestroy {
   }
 
 
-  public onInputInit(index: number): void {
-    const control = this.configs[index].control;
-    this.configs[index].outputEvents['focusout'].pipe(takeUntil(this.unsubscribeAll$), debounceTime(750)).subscribe(() => {
+  public onInputInit(): void {
+    const control = this.config.control;
+    this.config.outputEvents['focusout'].pipe(takeUntil(this.unsubscribeAll$), debounceTime(750)).subscribe(() => {
       if (!control.value) {
-        control.setValue(this.lists[index].name);
+        control.setValue(this.mainService.selectedList.name);
       } else {
         if (control.valid) {
 
-          this.todoHttpService.updateTodoList({...this.lists[index], name: control.value}).subscribe(() => {
-            this.lists[index] = {...this.lists[index], name: control.value}
+          this.todoHttpService.updateTodoList({...this.mainService.selectedList, name: control.value}).subscribe(() => {
+            this.mainService.selectedList = {...this.mainService.selectedList, name: control.value}
           })
         } else {
           console.log('please validate input')
@@ -91,17 +88,18 @@ export class ExpansionListComponent implements OnInit, OnDestroy {
     this.unsubscribeAll$.complete()
   }
 
-  public addEmptyTodo(newTodo: TodoItem, index: number) {
-    if (this.lists[index].items.length) {
+  public addEmptyTodo(newTodo: TodoItem) {
+    if (this.mainService.selectedList.items.length) {
 
-      this.lists[index].items[this.lists[index].items.length - 1] = newTodo;
+      this.mainService.selectedList.items[this.mainService.selectedList.items.length - 1] = newTodo;
     } else {
-      this.lists[index].items = [newTodo]
+      this.mainService.selectedList.items = [newTodo]
     }
   }
 
-  public completeTodo(todoIndex: number, listIndex: number) {
+  public completeTodo(todoIndex: number) {
     // refactor later
-    this.lists[listIndex].items = this.lists[listIndex].items.filter((item, index) => index !== todoIndex);
+    this.mainService.selectedList.items = this.mainService.selectedList.items.filter((item, index) => index !== todoIndex);
   }
+
 }

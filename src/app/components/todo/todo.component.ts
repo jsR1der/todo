@@ -12,6 +12,7 @@ import {catchError, debounceTime, finalize, of, Subject, takeUntil} from "rxjs";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {ReactiveFormsModule} from "@angular/forms";
 import {UpdateTodoAdapter} from "./todo.model";
+import {MatAccordion, MatExpansionPanel, MatExpansionPanelHeader} from "@angular/material/expansion";
 
 @Component({
   selector: 'app-todo',
@@ -25,7 +26,10 @@ import {UpdateTodoAdapter} from "./todo.model";
     NgIf,
     MatProgressSpinner,
     AsyncPipe,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatAccordion,
+    MatExpansionPanel,
+    MatExpansionPanelHeader
   ],
   templateUrl: './todo.component.html',
   styleUrl: './todo.component.scss',
