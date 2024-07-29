@@ -15,11 +15,12 @@ export class TodoItem implements Todo {
 
 
 
-export interface TodoList extends Todo {
+export class TodoList implements Todo {
   id: number;
-  items: TodoItem[]
-  count: number;
   userId: number;
+  name: string = '';
+  items: TodoItem[] = []
+  count: number = 0;
 }
 
 

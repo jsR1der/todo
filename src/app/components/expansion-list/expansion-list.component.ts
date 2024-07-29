@@ -10,9 +10,8 @@ import {MatIcon} from "@angular/material/icon";
 import {TodoComponent} from "../todo/todo.component";
 import {ExpansionListService} from "./expansion-list.service";
 import {InputConfig, InputConfigBuilder} from "../input/input.model";
-import {TodoHttpService} from "../../services/todo/todo-http.service";
 import {InputComponent} from "../input/input.component";
-import {debounceTime, Subject, takeUntil} from "rxjs";
+import {Subject} from "rxjs";
 import {TodoItem, TodoList} from "../../services/todo/todo.model";
 import {AsyncPipe, NgIf} from "@angular/common";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
@@ -44,15 +43,12 @@ export class ExpansionListComponent implements OnInit, OnDestroy {
   public config: InputConfig<string>;
   public unsubscribeAll$ = new Subject<void>();
 
-  constructor(public readonly expansionListService: ExpansionListService, private readonly todoHttpService: TodoHttpService, public mainService: MainService, private fb: NonNullableFormBuilder) {
+  constructor(public mainService: MainService, private fb: NonNullableFormBuilder) {
   }
 
 
   ngOnInit() {
     this.createConfig();
-    // this.mainService.onListCreate.pipe(takeUntil(this.unsubscribeAll$)).subscribe(newTodoList => {
-    //   this.config.push(this.configureConfig(newTodoList))
-    // })
   }
 
   private createConfig(): void {
@@ -64,25 +60,6 @@ export class ExpansionListComponent implements OnInit, OnDestroy {
   }
 
 
-  public onInputInit(): void {
-    const control = this.config.control;
-    this.config.outputEvents['focusout'].pipe(takeUntil(this.unsubscribeAll$), debounceTime(750)).subscribe(() => {
-      if (!control.value) {
-        control.setValue(this.mainService.selectedList.name);
-      } else {
-        if (control.valid) {
-
-          this.todoHttpService.updateTodoList({...this.mainService.selectedList, name: control.value}).subscribe(() => {
-            this.mainService.selectedList = {...this.mainService.selectedList, name: control.value}
-          })
-        } else {
-          console.log('please validate input')
-        }
-      }
-
-    })
-  }
-
   ngOnDestroy() {
     this.unsubscribeAll$.next()
     this.unsubscribeAll$.complete()
@@ -90,11 +67,11 @@ export class ExpansionListComponent implements OnInit, OnDestroy {
 
   public addEmptyTodo(newTodo: TodoItem) {
     if (this.mainService.selectedList.items.length) {
-
       this.mainService.selectedList.items[this.mainService.selectedList.items.length - 1] = newTodo;
     } else {
       this.mainService.selectedList.items = [newTodo]
     }
+    this.mainService.selectedList.count++
   }
 
   public completeTodo(todoIndex: number) {

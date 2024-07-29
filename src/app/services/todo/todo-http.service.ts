@@ -35,8 +35,8 @@ export class TodoHttpService {
     return this.httpClient.delete<boolean>(`${this.baseUrl}/${id}`);
   }
 
-  public deleteTodoList(id: boolean): Observable<boolean> {
-    return this.httpClient.delete<boolean>(`${this.baseUrl}/list/${id}`);
+  public deleteTodoList(id: number): Observable<boolean> {
+    return this.httpClient.delete<any>(`${this.baseUrl}/list/${id}`);
   }
 
   public getLists(): Observable<TodoList[]> {

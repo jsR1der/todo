@@ -7,17 +7,15 @@ import {ListComponent} from "../../components/selection-list/list.component";
 import {IconButtonComponent} from "../../components/icon-button/icon-button.component";
 import {HeaderComponent} from "../../components/header/header.component";
 import {ExpansionListComponent} from "../../components/expansion-list/expansion-list.component";
-import {ToolbarComponent} from "../../components/toolbar/toolbar.component";
 import {TailwindFontSizeEnum, TitleType} from "../../models/tailwind.model";
 import {TitleComponent} from "../../components/title/title.component";
 import {MainService} from "./main.service";
-import {ButtonConfig} from "../../components/icon-button/button.model";
 import {ActivatedRoute} from "@angular/router";
 import {TodoList} from "../../services/todo/todo.model";
 import {MatDialog} from "@angular/material/dialog";
-import {CreateListDialogComponent} from "../../dialogs/create-list-dialog/create-list-dialog.component";
-import {filter} from "rxjs";
 import {TodoHttpService} from "../../services/todo/todo-http.service";
+import {ToolbarComponent} from "../../components/toolbar/toolbar.component";
+import {select} from "@ngrx/store";
 
 @Component({
   selector: 'app-main',
@@ -32,46 +30,41 @@ import {TodoHttpService} from "../../services/todo/todo-http.service";
     IconButtonComponent,
     HeaderComponent,
     ExpansionListComponent,
+    TitleComponent,
     ToolbarComponent,
-    TitleComponent
   ],
   templateUrl: './main.component.html',
   styleUrl: './main.component.scss',
   encapsulation: ViewEncapsulation.None,
-  providers: [MainService]
 })
 export class MainComponent implements OnInit {
   public lists: TodoList[] = []
-  public headerButtonConfig: ButtonConfig;
   protected readonly TailwindFontSizeEnum = TailwindFontSizeEnum;
   protected readonly HeaderType = TitleType;
 
   constructor(public mainService: MainService, private aRoute: ActivatedRoute, private matDialog: MatDialog, private readonly todoHttpService: TodoHttpService) {
   }
 
-  public openCreteListDialog(): void {
-    this.matDialog.open(CreateListDialogComponent, {
-      width: '550px',
-      data: {}
-    }).afterClosed().pipe(filter(Boolean)).subscribe(newList => {
-      this.todoHttpService.createTodoList(newList).subscribe(newTodoList => {
-        this.mainService.onListCreate.next(newTodoList);
-        this.lists.push(newList);
-      })
-    })
-  }
-
   ngOnInit() {
     this.lists = this.getLists()
     if (this.lists?.length) {
       this.mainService.selectList(this.lists[0]);
+    } else {
+      this.mainService.selectList(new TodoList())
     }
 
+    this.mainService.onListCreate.subscribe(newList => {
+      this.lists.push(newList)
+      this.mainService.selectList(newList)
+    })
 
-    this.headerButtonConfig = this.mainService.buildButtonConfig({
-      iconName: 'add',
-      color: 'primary',
-      action: this.openCreteListDialog.bind(this)
+    this.mainService.onListDelete.subscribe(deletedId => {
+      this.lists = this.lists.filter((item) => item.id !== deletedId);
+      if (this.lists.length) {
+        this.mainService.selectList(this.lists[this.lists.length - 1]);
+      } else {
+        this.mainService.selectList(new TodoList())
+      }
     })
   }
 
