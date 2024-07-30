@@ -1,4 +1,8 @@
-    @for (todo of mainService.selectedList.items; track todo.name; let todoIndex = $index) {
-      <app-todo (onComplete)="completeTodo(todoIndex)" [listId]="mainService.selectedList.id" [todo]="todo"></app-todo>
+    @for (group of mainService.expansionListContext.groups; track group.listName) {
+      @for (todo of group.items; track todo.id; let todoIndex = $index) {
+        <app-todo (onComplete)="completeTodo(todoIndex)" [listId]="mainService.selectedList.id"
+                  [todo]="todo"></app-todo>
+      }
     }
-    <app-todo (onCreate)="addEmptyTodo($event)" [listId]="mainService.selectedList.id"></app-todo>
+    <app-todo *ngIf="false" (onCreate)="addEmptyTodo($event)" [listId]="mainService.selectedList.id"></app-todo>
+

@@ -1,7 +1,8 @@
 import {Component, Input} from '@angular/core';
-import {IGroupItem} from "./group-item.model";
 import {MatCard, MatCardContent, MatCardHeader, MatCardSubtitle, MatCardTitle} from "@angular/material/card";
 import {MatIcon} from "@angular/material/icon";
+import {TodoGroup} from "../../../services/todo/todo.model";
+import {GroupItemMeta} from "./group-item.model";
 
 @Component({
   selector: 'app-group-item',
@@ -18,5 +19,6 @@ import {MatIcon} from "@angular/material/icon";
   styleUrl: './group-item.component.scss'
 })
 export class GroupItemComponent {
- @Input({required: true}) groupItem: IGroupItem;
+  @Input({required: true}) group: TodoGroup;
+  @Input() config: GroupItemMeta;
 }

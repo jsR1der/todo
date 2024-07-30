@@ -1,5 +1,10 @@
 <section class="todo-groups">
-  @for (group of groups; track group.name) {
-    <app-group-item [groupItem]="group"></app-group-item>
-  }
+  <app-group-item (click)="setAllStrategy(groups['all'].items)" [config]="{name:'All',icon:'mail'}"
+                  [group]="groups['all']"></app-group-item>
+  <app-group-item (click)="setScheduledStrategy(groups['scheduled'].items)"
+                  [config]="{name:'Scheduled',icon:'schedule'}" [group]="groups['scheduled']"></app-group-item>
+  <app-group-item (click)="setTodayStrategy(groups['today'].items)" [config]="{name:'Today',icon:'today'}"
+                  [group]="groups['today']"></app-group-item>
+  <app-group-item (click)="setCompletedStrategy(groups['completed'].items)"
+                  [config]="{name:'Completed',icon:'check_circle'}" [group]="groups['completed']"></app-group-item>
 </section>

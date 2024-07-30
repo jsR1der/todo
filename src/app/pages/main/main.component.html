@@ -4,13 +4,14 @@
               mode="side"
               opened="true">
     <app-user-info></app-user-info>
-    <app-groups></app-groups>
+    <app-groups [groups]="groups"></app-groups>
     <app-header>
       <app-title class="title"
                  [config]="{title: 'My lists',size: TailwindFontSizeEnum.xs, type: HeaderType.Custom}"></app-title>
       <div class="count">{{ lists?.length || 0 }}</div>
     </app-header>
     <app-selection-list [lists]="lists"></app-selection-list>
+    <button (click)="mainService.openCreteListDialog()">create list</button>
   </mat-drawer>
   <main class="p-4">
     <app-toolbar></app-toolbar>

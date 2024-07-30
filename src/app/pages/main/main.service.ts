@@ -5,12 +5,19 @@ import {TodoList} from "../../services/todo/todo.model";
 import {CreateListDialogComponent} from "../../dialogs/create-list-dialog/create-list-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {TodoHttpService} from "../../services/todo/todo-http.service";
+import {ExpansionListContext, ExpansionListStrategy} from "../../components/expansion-list/expansion-list.model";
 
 @Injectable({providedIn: "root"})
 export class MainService {
   public onListCreate = new Subject<TodoList>();
   public onListDelete = new Subject<number>();
+
+  public lists: TodoList[] = [];
   public selectedList: TodoList;
+
+  public expansionListContext: ExpansionListContext;
+  public selectedStrategy: ExpansionListStrategy;
+
 
   constructor(private matDialog: MatDialog, private todoHttpService: TodoHttpService) {
   }
@@ -37,7 +44,7 @@ export class MainService {
   }
 
   public deleteList(): void {
-    this.todoHttpService.deleteTodoList(this.selectedList.id).subscribe(list => {
+    this.todoHttpService.deleteTodoList(this.selectedList.id).subscribe(() => {
       this.onListDelete.next(this.selectedList.id);
     })
   }

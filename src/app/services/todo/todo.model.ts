@@ -14,7 +14,6 @@ export class TodoItem implements Todo {
 }
 
 
-
 export class TodoList implements Todo {
   id: number;
   userId: number;
@@ -22,6 +21,8 @@ export class TodoList implements Todo {
   items: TodoItem[] = []
   count: number = 0;
 }
+
+export type TodoGroup = { items: TodoItem[], count: number }
 
 
 export type CreateTodo = Partial<TodoItem>

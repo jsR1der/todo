@@ -13,10 +13,11 @@ import {InputConfig, InputConfigBuilder} from "../input/input.model";
 import {InputComponent} from "../input/input.component";
 import {Subject} from "rxjs";
 import {TodoItem, TodoList} from "../../services/todo/todo.model";
-import {AsyncPipe, NgIf} from "@angular/common";
+import {AsyncPipe, NgIf, NgSwitch, NgSwitchCase} from "@angular/common";
 import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {MainService} from "../../pages/main/main.service";
 import {NonNullableFormBuilder, Validators} from "@angular/forms";
+import {AllExpansionListStrategy, SingleListExpansionListStrategy} from "./expansion-list.model";
 
 @Component({
   selector: 'app-expansion-list',
@@ -32,7 +33,9 @@ import {NonNullableFormBuilder, Validators} from "@angular/forms";
     InputComponent,
     AsyncPipe,
     MatProgressSpinner,
-    NgIf
+    NgIf,
+    NgSwitchCase,
+    NgSwitch
   ],
   providers: [ExpansionListService],
   templateUrl: './expansion-list.component.html',
@@ -78,5 +81,6 @@ export class ExpansionListComponent implements OnInit, OnDestroy {
     // refactor later
     this.mainService.selectedList.items = this.mainService.selectedList.items.filter((item, index) => index !== todoIndex);
   }
-
+  protected readonly SingleListExpansionListStrategy = SingleListExpansionListStrategy;
+  protected readonly AllExpansionListStrategy = AllExpansionListStrategy;
 }

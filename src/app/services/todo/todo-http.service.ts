@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {CreateTodo, Todo, TodoItem, TodoList} from "./todo.model";
+import {CreateTodo, TodoGroup, TodoItem, TodoList} from "./todo.model";
 import {AuthHttpService} from "../../pages/auth/auth-http.service";
 
 @Injectable({
@@ -41,6 +41,10 @@ export class TodoHttpService {
 
   public getLists(): Observable<TodoList[]> {
     return this.httpClient.get<TodoList[]>(`${this.baseUrl}/lists`);
+  }
+
+  public getGroups(): Observable<Record<string, TodoGroup>> {
+    return this.httpClient.get<Record<string, TodoGroup>>(`${this.baseUrl}/groups`);
   }
 
 

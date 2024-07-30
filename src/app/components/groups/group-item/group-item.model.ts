@@ -1,6 +1,4 @@
-export interface IGroupItem {
+export interface GroupItemMeta {
   icon: string;
-  iconColor: string;
   name: string;
-  containItems: number;
 }

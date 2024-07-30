@@ -44,11 +44,27 @@ export class TodosService {
         where: { list_id: list.id, iscompleted: false },
         order: { id: 'ASC' },
       });
-      console.log(lists[i].items.length);
 
       lists[i].count = lists[i].items.length || 0;
     }
     return lists;
+  }
+
+  public async getGroups() {
+    const date = new Date().toISOString();
+    const todayDate = date.slice(0, date.indexOf('T'));
+
+    const all = await this.todoRepository.find();
+    const completed = all.filter((todo) => todo.iscompleted);
+    const scheduled = all.filter((todo) => !todo.iscompleted && todo.date);
+    const today = scheduled.filter((todo) => todo.date === todayDate);
+
+    return {
+      all: { items: all, count: all.length },
+      completed: { items: completed, count: completed.length },
+      scheduled: { items: scheduled, count: scheduled.length },
+      today: { items: today, count: today.length },
+    };
   }
 
   public async findOne(id: number) {

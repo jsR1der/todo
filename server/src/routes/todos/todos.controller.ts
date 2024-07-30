@@ -38,6 +38,11 @@ export class TodosController {
     return this.todosService.getAllLists();
   }
 
+  @Get('groups')
+  getGroups() {
+    return this.todosService.getGroups();
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.todosService.findOne(+id);

@@ -11,11 +11,14 @@ import {TailwindFontSizeEnum, TitleType} from "../../models/tailwind.model";
 import {TitleComponent} from "../../components/title/title.component";
 import {MainService} from "./main.service";
 import {ActivatedRoute} from "@angular/router";
-import {TodoList} from "../../services/todo/todo.model";
+import {TodoGroup, TodoList} from "../../services/todo/todo.model";
 import {MatDialog} from "@angular/material/dialog";
 import {TodoHttpService} from "../../services/todo/todo-http.service";
 import {ToolbarComponent} from "../../components/toolbar/toolbar.component";
-import {select} from "@ngrx/store";
+import {
+  ExpansionListContext,
+  SingleListExpansionListStrategy
+} from "../../components/expansion-list/expansion-list.model";
 
 @Component({
   selector: 'app-main',
@@ -39,6 +42,7 @@ import {select} from "@ngrx/store";
 })
 export class MainComponent implements OnInit {
   public lists: TodoList[] = []
+  public groups: Record<string, TodoGroup>;
   protected readonly TailwindFontSizeEnum = TailwindFontSizeEnum;
   protected readonly HeaderType = TitleType;
 
@@ -47,10 +51,25 @@ export class MainComponent implements OnInit {
 
   ngOnInit() {
     this.lists = this.getLists()
+    this.groups = this.getGroups()
+
     if (this.lists?.length) {
       this.mainService.selectList(this.lists[0]);
+      const strategy = new SingleListExpansionListStrategy(this.mainService.selectedList.name)
+      this.mainService.expansionListContext = new ExpansionListContext(this.mainService.lists)
+      this.mainService.expansionListContext.setStrategy(strategy)
+      this.mainService.expansionListContext.groupTodoItems(this.mainService.selectedList.items)
+      this.mainService.selectedStrategy = strategy;
+      console.log(this.mainService.expansionListContext.groups)
+      console.log(this.mainService.selectedStrategy)
     } else {
       this.mainService.selectList(new TodoList())
+      this.mainService.expansionListContext = new ExpansionListContext(this.mainService.lists)
+      const strategy = new SingleListExpansionListStrategy(this.mainService.selectedList.name)
+      this.mainService.expansionListContext.setStrategy(strategy)
+      this.mainService.selectedStrategy = strategy;
+      console.log(this.mainService.expansionListContext.groups)
+      console.log(this.mainService.selectedStrategy)
     }
 
     this.mainService.onListCreate.subscribe(newList => {
@@ -70,7 +89,8 @@ export class MainComponent implements OnInit {
 
 
   private getLists(): TodoList[] {
-    const lists = this.aRoute.snapshot.data['data'];
+    const lists = this.aRoute.snapshot.data['data'].lists;
+    this.mainService.lists = lists;
     if (!lists) {
       return [];
     }
@@ -78,4 +98,11 @@ export class MainComponent implements OnInit {
   }
 
 
+  private getGroups() {
+    const lists = this.aRoute.snapshot.data['data'].groups;
+    if (!lists) {
+      return [];
+    }
+    return lists;
+  }
 }
